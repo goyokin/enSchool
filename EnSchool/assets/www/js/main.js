@@ -186,15 +186,7 @@ $.fn.showChatList = function(data) {
           
           $("#resource_index").click(function() {
                 alert("click resource_index, get moments");
-                /*
-                setTimeout(function(){
-		              $("#moments_href").click(function() {
-			          	alert("moments link click");
-			          });
-                }, 1000);
-	          	*/
-		          	
-	          
+                window.location = "resource.html";
 	     });
     return;
     
