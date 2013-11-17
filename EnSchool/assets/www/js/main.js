@@ -177,12 +177,25 @@ $.fn.showChatList = function(data) {
     
    $("#contentList").listview("refresh");
         
-          $("li").click(function(){
+          $("#contentList > li").click(function(){
           alert($(this).find(".li_id").attr("id"));
           currentId = $(this).find(".li_id").attr("id");
           getFeeds($(this).find(".li_id").attr("id"));
             
-            });
+          });
+          
+          $("#resource_index").click(function() {
+                alert("click resource_index, get moments");
+                /*
+                setTimeout(function(){
+		              $("#moments_href").click(function() {
+			          	alert("moments link click");
+			          });
+                }, 1000);
+	          	*/
+		          	
+	          
+	     });
     return;
     
      contact_data = contentData;
