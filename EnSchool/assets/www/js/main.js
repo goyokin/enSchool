@@ -412,14 +412,14 @@ function getFeedsAjax() {
 function getGroups() {
 	//forcetkClient.query("SELECT CollaborationGroupId from CollaborationGroupMember where Memberid = " + forcetkClient.userId, onSuccess, onError); 
 	//forcetkClient.query("SELECT Id, Name from CollaborationGroup where Name = 'Class 123'", onSuccessGroup, onError); 
-	forcetkClient.query("SELECT Id, Name from CollaborationGroup where Name = 'Class 123'", onSuccessGroup, onError);
+	forcetkClient.query("SELECT Id, Name from CollaborationGroup where Name LIKE '%group'", onSuccessGroup, onError);
 }
 
 function getNewGroups() {
    
     //forcetkClient.query("SELECT CollaborationGroupId from CollaborationGroupMember where Memberid = " + forcetkClient.userId, onSuccess, onError); 
     //forcetkClient.query("SELECT Id, Name, SmallPhotoUrl from CollaborationGroup where Name = 'Class 123'", onSuccessGroup, onError); 
-    forcetkClient.query("SELECT Id, Name, SmallPhotoUrl from CollaborationGroup where OwnerId = '" + forcetkClient.userId + "'", onSuccessGroup, onError);
+    forcetkClient.query("SELECT Id, Name, SmallPhotoUrl from CollaborationGroup where Name LIKE '%group'", onSuccessGroup, onError);
 }
 
 function getGroupsAjax() {
