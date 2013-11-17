@@ -172,6 +172,7 @@ $.fn.showChatList = function(data) {
         
           $("li").click(function(){
           alert($(this).find(".li_id").attr("id"));
+          getFeeds($(this).find(".li_id").attr("id"));
             
             });
     return;
@@ -377,11 +378,11 @@ function getUsers() {
 	forcetkClient.query("SELECT Id, Name, SmallPhotoUrl FROM User", onGetUserSuccess, onGetUserError); 
 }
 
-function getFeeds() {
+function getFeeds(groupId) {
 	alert("getFeeds");
 	//forcetkClient.query("Select Id, Body from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
-
- forcetkClient.query("Select Id, Body, ParentId, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
+forcetkClient.query("Select Id, Body, ParentId, InsertedById, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH and ParentId = '" + groupId + "' ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
+// forcetkClient.query("Select Id, Body, ParentId, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
 }
 
 function getFeedsAjax() {
@@ -501,7 +502,7 @@ function onGetFeedsSuccess(data) {
 	
 	    var eleData;
 	    var contentData = data.records;
-    
+    feeds = contentData;
        for (var i = 0; i < contentData.length; i++) {
         eleData = contentData[i];
           // Clone li element  
