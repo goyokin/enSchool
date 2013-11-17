@@ -9,10 +9,13 @@ var contact_data = [];
 var individual = [];
 var group = [];
 
-var userReponse;
-var smallPhotoUrl;
 var users = [];
 var groups = [];
+var feeds = [];
+
+ 
+var pictureSource;   // picture source
+var destinationType; // sets the format of returned value
 
 //Initialize function
 
@@ -91,14 +94,48 @@ $.fn.positionOn = function(element) {
   });
 };
 
+$.fn.showChatDetail = function(contentData) {
+    console.log(contentData);
+    var eleData;
+    
+    for (var i = 0; i < contentData.length; i++) {
+        eleData = contentData[i];
+          // Clone li element  
+          console.log("eledata type " + eleData.type);
+          var clone = eleData.type == "me" ? $("#chat_me").clone() : $("#chat_you_text").clone();
+          if (typeof  clone.find(".chatTime") != "undefined") {
+              clone.find(".chatTime").first().text(eleData.time);
+          }
+          
+          clone.find("text_you").attr("text",eleData.Body);
+          $("#contentChat").append(clone);
+          console.log(clone);
+    }
+        $(".cloudText").click(function(){
+                console.log("click"); 
+                
+            var target = $(this);
+            var dialog = $("#chatForwardDialog");
+            dialog.positionOn(target);
+$("#textinput").css("height", "10px");
+            dialog.show(); 
+            
+            });
+};
 
 
-
+function onGetUserSuccess(data) {
+	$(this).showChatList(data);
+	getNewGroups();
+	
+	
+}
 
 function onGetUserError(error) {
     //cordova.require("salesforce/util/logger").logToConsole("onErrorSfdc: " + JSON.stringify(error));
     alert('GetUser Error: ' + JSON.stringify(error));
 }
+
 
 $.fn.showChatList = function(data) {
     var contentData =  data.records;
@@ -106,17 +143,15 @@ $.fn.showChatList = function(data) {
     
     var eleData;
     
-    users = new Array(contentData.length * 2);
-    j = 0;
+    users = contentData;
     for (var i = 0; i < contentData.length; i++) {
         eleData = contentData[i];
-        users[j] = eleData.Id;
-        users[++j] = eleData.SmallPhotoUrl + "?oauth_token=" + forcetkClient.sessionId;
-        j++;
-        smallPhotoUrl = eleData.SmallPhotoUrl + "?oauth_token=" + forcetkClient.sessionId;
           // Clone li element         
         var clone = $("#test").clone();
-        clone.attr("id", eleData.id);
+        clone.attr("id", eleData.Id);
+        clone.find(".li_id").attr("id", eleData.Id);
+        
+       
         clone.find(":header").html(eleData.Name);
         /*
         clone.find("p").last().html(eleData.desc);
@@ -130,58 +165,17 @@ $.fn.showChatList = function(data) {
         }
         */
         $("#contentList").append(clone);
-        $("#contentList").listview("refresh");
-    }
-    return;
-     contact_data = contentData;
-            
-            //console.log(data);
-              // TODO:: Do your initialization job
-            $(".cloudText").click(function(){
-                console.log("click"); 
-                
-            var target = $(this);
-            var dialog = $("#chatForwardDialog");
-            dialog.positionOn(target);
 
-            dialog.show(); 
+    }
+    
+   $("#contentList").listview("refresh");
+        
+          $("li").click(function(){
+          alert($(this).find(".li_id").attr("id"));
             
             });
-};
-
-$.fn.showGroupList = function(data) {
-    var contentData  =  data.records;
-    alert('group records ' + JSON.stringify(contentData));
-    
-    var eleData;
-    
-    groups = new Array(contentData.length * 2);
-    var j = 0;
-    for (var i = 0; i < contentData.length; i++) {
-        eleData = contentData[i];
-        groups[j] = eleData.Id;
-        groups[++j] = eleData.SmallPhotoUrl + "?oauth_token=" + forcetkClient.sessionId;
-        j++;
-        smallPhotoUrl = eleData.SmallPhotoUrl + "?oauth_token=" + forcetkClient.sessionId;
-          // Clone li element         
-        var clone = $("#test").clone();
-        clone.attr("id", eleData.id);
-        clone.find(":header").html(eleData.Name);
-        /*
-        clone.find("p").last().html(eleData.desc);
-        clone.find("p").first().html(eleData.time);
-        */
-        clone.find("img").attr("src", eleData.SmallPhotoUrl + "?oauth_token=" + forcetkClient.sessionId);
-        /*
-        if (eleData.unread > 0) {
-            clone.find(".unreadDot").text(eleData.unread);
-            clone.find(".unreadDot").show();
-        }
-        */
-        $("#contentList").append(clone);
-        $("#contentList").listview("refresh");
-    }
     return;
+    
      contact_data = contentData;
             
             //console.log(data);
@@ -299,12 +293,12 @@ var initChatList = function () {
 var initChatDetail = function () {
     console.log("in the init chat detail");
 
-    getFeeds();
     
+   // getFeeds();
     return;
     
     
-   /* var data = [
+    var data = [
     {
     id:"me",
     type: "me",
@@ -339,10 +333,8 @@ var initChatDetail = function () {
         error: function(){
             console.log('Failed to load data');   
         }
-    });  */
+    });  
 };
-
-
 
 var initNewChatGroup = function() {
     console.log("new chat group");
@@ -368,7 +360,18 @@ var onChatPhoto = function() {
     alert("on chat photo select");
     
 }
-
+var onChatSend = function() {
+    alert("MESSAGE to SEND: " + $("#chatInputText").val());
+      var clone =  $("#chat_me").clone();
+          if (typeof  clone.find(".chatTime") != "undefined") {
+              clone.find(".chatTime").first().text("time later");
+          }
+          clone.find("pre").text($("#chatInputText").val());
+          clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
+          $("#contentChat").append(clone);
+          postMessage($("#chatInputText").val());
+    
+}
 
 function getUsers() {
 	forcetkClient.query("SELECT Id, Name, SmallPhotoUrl FROM User", onGetUserSuccess, onGetUserError); 
@@ -376,19 +379,28 @@ function getUsers() {
 
 function getFeeds() {
 	alert("getFeeds");
-	forcetkClient.query("Select Id, Body, ParentId, InsertedById, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH and ParentId = '" + groups[0] + "' ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
+	//forcetkClient.query("Select Id, Body from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
+
+ forcetkClient.query("Select Id, Body, ParentId, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
 }
 
 function getFeedsAjax() {
-	alert("getFeedsAjax");
-	forcetkClient.ajax("/v29.0/chatter/feeds/to/me", onGetFeedsSuccess, onGetFeedsError); 
+    alert("getFeedsAjax");
+    forcetkClient.ajax("/v29.0/chatter/feeds/to/me", onGetFeedsSuccess, onGetFeedsError); 
 }
 
 function getGroups() {
 	alert("getGroups");
 	//forcetkClient.query("SELECT CollaborationGroupId from CollaborationGroupMember where Memberid = " + forcetkClient.userId, onSuccess, onError); 
-	forcetkClient.query("SELECT Id, Name, SmallPhotoUrl from CollaborationGroup where Name = 'Class 123'", onSuccessGroup, onError); 
-	//forcetkClient.query("SELECT Id, Name, SmallPhotoUrl from CollaborationGroup where OwnerId = '" + forcetkClient.userId + "'", onSuccessGroup, onError);
+	//forcetkClient.query("SELECT Id, Name from CollaborationGroup where Name = 'Class 123'", onSuccessGroup, onError); 
+	forcetkClient.query("SELECT Id, Name from CollaborationGroup where Name = 'Class 123'", onSuccessGroup, onError);
+}
+
+function getNewGroups() {
+    alert("getGroups");
+    //forcetkClient.query("SELECT CollaborationGroupId from CollaborationGroupMember where Memberid = " + forcetkClient.userId, onSuccess, onError); 
+    //forcetkClient.query("SELECT Id, Name, SmallPhotoUrl from CollaborationGroup where Name = 'Class 123'", onSuccessGroup, onError); 
+    forcetkClient.query("SELECT Id, Name, SmallPhotoUrl from CollaborationGroup where OwnerId = '" + forcetkClient.userId + "'", onSuccessGroup, onError);
 }
 
 function getGroupsAjax() {
@@ -396,30 +408,19 @@ function getGroupsAjax() {
 	forcetkClient.ajax('/v29.0/chatter/users/me/groups', onSuccess, onError); 
 }
 
-function postMessage(message) {
+function postMessage(msg) {
 	alert("postMessage");
 	var fields = {};
     fields["ParentId"] = forcetkClient.userId;
 	//alert(forcetkClient.id);
 	//fields["ParentId"] = forcetkClient.getId();
-    fields["body"] = message;
-    forcetkClient.create("FeedItem", fields, onSuccess, onError); 
+    fields["body"] = msg;
+    forcetkClient.create("FeedItem", fields, onPostMessageSuccess, onError); 
 }
 
-var onChatSend = function() {
-    alert("MESSAGE to SEND: " + $("#chatInputText").val());
-    postMessage($("#chatInputText").val());
-    
-      /*var clone =  $("#chat_me").clone();
-          if (typeof  clone.find(".chatTime") != "undefined") {
-              clone.find(".chatTime").first().text("time later");
-          }
-          clone.find("pre").text($("#chatInputText").val());
-          clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
-          $("#contentChat").append(clone);*/
-    
+function onPostMessageSuccess(data) {
+	alert(JSON.stringify(data));
 }
-
 function postMessageToGroup() {
 	alert("postMessageToGroup");
 	var fields = {};
@@ -433,19 +434,18 @@ function postMessageToGroup() {
 
 function onSuccessGroup(response) {
 	alert('Success: ' + JSON.stringify(response));
-	/*var $j = jQuery.noConflict();	
-	var jj = users.length;
+	groups = response.records;
+	
+	$(this).showChatList(response);
+	
+	return;
+	var $j = jQuery.noConflict();	
 	 $j.each(response.records, function(i, record) {
-         //currentGroupId = record.Id;
-		 users[jj] = records.Id;
-		 users[++jj] = records.SmallPhotoUrl;
-		 jj++;
+         currentGroupId = record.Id;
      });
 	 forcetkClient.setGroupId(currentGroupId);
 	 alert("groupid: " + forcetkClient.groupId);
-	 postMessageToGroup();*/
-	
-	$(this).showGroupList(response);
+	 postMessageToGroup();
 }
 
 function onSuccess(data) {
@@ -460,93 +460,64 @@ function onError(error) {
 }
 
 
-
-function onGetFeedsSuccess(data) {
-	alert('GetFeedsSuccess: ' + JSON.stringify(data));
-	$(this).showChatDetail(data);
-}
-
-
-function onGetFeedsError(error) {
-    //cordova.require("salesforce/util/logger").logToConsole("onErrorSfdc: " + JSON.stringify(error));
-    alert('GetFeedError: ' + JSON.stringify(error));
-}
-
-function onGetUserSuccess(data) {
-	
-	
-	$(this).showChatList(data);
-	
-	/*
-	$j.each(data.records, function(i, record) {
-		//alert(record.Id);
-		users[i] = record.Id;
-		users[i+1] = record.SmallPhotoUrl;
-	});*/
+function getUserPhotoUrl_orig(userId) {
+    //alert(userId);
+    for (var i = 0; i < users.length; i++) {
+        //alert(users[i]);
+        if (users[i] == userId) {
+            return users[i+1].SmallPhotoUrl;
+        }
+    }
+    //alert("group length = " + groups.length);
+    for (var i = 0; i < groups.length; i++) {
+        //alert(users[i]);
+        if (groups[i] == userId) {
+            return groups[i+1].SmallPhotoUrl;
+        }
+    }
+    return users[1].SmallPhotoUrl;
 }
 
 function getUserPhotoUrl(userId) {
-	for (var i = 0; i < users.length; i++) {
-		//alert(users[i]);
-		if (users[i] == userId) {
-			return users[i+1];
-		}
-	}
-	for (var i = 0; i < groups.length; i++) {
-		//alert(users[i]);
-		if (groups[i] == userId) {
-			return groups[i+1];
-		}
-	}
-	return users[1];
+    //alert(userId);
+    for (var i = 0; i < users.length; i++) {
+        //alert(users[i]);
+        if (users[i].Id == userId) {
+            return users[i].SmallPhotoUrl;
+        }
+    }
+    //alert("group length = " + groups.length);
+    for (var i = 0; i < groups.length; i++) {
+        //alert(users[i]);
+        if (groups[i].Id == userId) {
+            return groups[i].SmallPhotoUrl;
+        }
+    }
+    return users[0].SmallPhotoUrl;
 }
-
-$.fn.showChatDetail = function(response) {
-	//alert("contentData.length: " + response.totalSize);
-	var $j = jQuery.noConflict();
-    //cordova.require("salesforce/util/logger").logToConsole("onSuccessFeedItem: received " + response.totalSize);
+function onGetFeedsSuccess(data) {
+	alert('GetFeedsSuccess: ' + JSON.stringify(data));
+	
+	
+	    var eleData;
+	    var contentData = data.records;
     
-    $j("#contentChat").html("");
-    var ul = $j('<div class="chatItem you" id="chat_you">');
-    //alert(smallPhotoUrl);
-    $j("#contentChat").append(ul);
-    $j.each(response.records, function(i, record) {
-    	//alert(record.Body);
-    	//alert (getUserPhotoUrl(record.ParentId));
-    	//ul.append($j('<div class="chatItem you" id="chat_you"><div class="chatItemContent">'));
-    	
-    	ul.append($j('<div class="time"> <span class="timeBg left"></span> <span class="chatTime">' + '10:00' + '</span> <span class="timeBg right"></span> </div>')); 
-    	ul.append($j('<div class="chatItemContent">'));
-    	//ul.append($j('<img class="avatar" src="./assets/icons/jerry.jpg" title="KW" click="showProfile" username="F100000347971931">'));
-    	ul.append($j('<img class="avatar" src="' + getUserPhotoUrl(record.InsertedById) + '" title="KW" click="showProfile" username="F100000347971931">'));
-        
-    	ul.append($j('<div class="cloud cloudText" un="cloud_2030211748" msgid="2030211748">'));
-        ul.append($j('<div class="cloudPannel" style=""> <div class="sendStatus"></div>'));
-	    
-	    ul.append($j('<div class="cloudBody"><div class="cloudContent"> <pre style="white-space:pre-wrap">' + record.Body + '</pre>  </div>  </div>'));
-	    ul.append($j('<div class="cloudArrow"></div>'));
-	    ul.append($j('</div></div></div>'));
-	    
-    });
- 
-    ul.append($j('</div>'));
-    $j("#contentChat").trigger( "create" );
-    
-    
-    /*console.log(contentData);
-    var eleData;
-    alert("contentData.length: " + contentData.totalSize);
-    for (var i = 0; i < contentData.totalSize; i++) {
+       for (var i = 0; i < contentData.length; i++) {
         eleData = contentData[i];
           // Clone li element  
           console.log("eledata type " + eleData.type);
-          var clone = eleData.type == "me" ? $("#chat_me").clone() : $("#chat_you").clone();
+          var clone = eleData.type == "me" ? $("#chat_me").clone() : $("#chat_you_text").clone();
           if (typeof  clone.find(".chatTime") != "undefined") {
-              clone.find(".chatTime").first().text(eleData.CreatedDate);
+              clone.find(".chatTime").first().text(eleData.time);
           }
           
-          clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/" + avartars[eleData.avatar]);
-          clone.find(".chatItemContent > .cloudBody").first().text(eleData.Body);
+          
+          
+          var photoUrl = getUserPhotoUrl(eleData.ParentId) + "?oauth_token=" + forcetkClient.sessionId;
+         
+          	clone.find(".chatItemContent > .avatar").first().attr("src", photoUrl);
+             clone.find("pre").text(eleData.Body);
+          
           $("#contentChat").append(clone);
           console.log(clone);
     }
@@ -558,11 +529,20 @@ $.fn.showChatDetail = function(response) {
             var target = $(this);
             var dialog = $("#chatForwardDialog");
             dialog.positionOn(target);
-            $("#textinput").css("height", "10px");
+$("#textinput").css("height", "10px");
             dialog.show(); 
             
-            });*/
-};
+            });
+	
+	
+}
+
+
+function onGetFeedsError(error) {
+    //cordova.require("salesforce/util/logger").logToConsole("onErrorSfdc: " + JSON.stringify(error));
+    alert('GetFeedError: ' + JSON.stringify(error));
+}
+
 
 
     var apiVersion = "v28.0";
@@ -581,11 +561,12 @@ $.fn.showChatDetail = function(response) {
 
         //register to receive notifications when autoRefreshOnForeground refreshes the sfdc session
         document.addEventListener("salesforceSessionRefresh",salesforceSessionRefreshed,false);
+        //Camera
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
 
         //Kate: get all users
         getUsers();
-        
-        getGroups();
         
         //Kate: get all feeds
         //getFeeds();
@@ -624,7 +605,7 @@ $.fn.showChatDetail = function(response) {
         //logToConsole("getAuthCredentialsError: " + error);
     }
 
-
+/*
     function onCameraClick() {
         alert("camera click");
     }
@@ -632,6 +613,92 @@ $.fn.showChatDetail = function(response) {
         alert("Photo click");
     }
     
+    */
+    
+    // Called when a photo is successfully retrieved
+    //
+    function onPhotoDataSuccess(imageData) {
+      onPhotoSuccess("data:image/jpeg;base64," + imageData);
+      
+    }
+
+    // Called when a photo is successfully retrieved
+    //
+
+function onPhotoSuccess(data) {
+  alert("MESSAGE to SEND: ");
+      var clone =  $("#chat_me_photo").clone();
+          if (typeof  clone.find(".chatTime") != "undefined") {
+              clone.find(".chatTime").first().text("time later");
+          }
+alert(clone.find("#smallImage").attr("src"));
+clone.find("#smallImage").attr("src", data);
+
+          $("#contentChat").append(clone);
+          $('#popupBasic').popup("close");
+          $('#popupBasic').hide();
+                    return;
+}
+
+    function onPhotoURISuccess(imageURI) {
+      onPhotoSuccess(imageURI);
+      
+    }
+
+    // A button will call this function
+    //
+    function capturePhoto() {
+      // Take picture using device camera and retrieve image as base64-encoded string
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+        destinationType: destinationType.DATA_URL });
+    }
+
+    // A button will call this function
+    //
+    function capturePhotoEdit() {
+      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+      destinationType: destinationType.DATA_URL });
+    }
+
+    // A button will call this function
+    //
+    function getPhoto(source) {
+      // Retrieve image file location from specified source
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
+    }
+
+    // Called if something bad happens.
+    //
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+
+
+    function onCameraClick() {
+        capturePhoto();
+
+    }
+    function onPhotoClick() {
+        getPhoto(pictureSource.PHOTOLIBRARY);
+        //getPhoto(pictureSource.SAVEDPHOTOALBUM);
+    }
+    
+$( "#popupPanel" ).on({
+    popupbeforeposition: function() {
+        var h = $( window ).height();
+        alert("window heihgt" + h);
+ 
+        $( "#popupPanel" ).css( "height", h );
+    }
+});    
+
+$("#pic_camera").bind("click", function(){onCameraClick();});
+$("#pic_album").bind("click", function(){onPhotoClick();});
+$("#pic_cancel").bind("click", function(){$('#popupBasic').popup('close');});
+
 $(document).on("pageinit", "#chat_list", initChatList); 
 $(document).on("pageinit", "#chat_detail", initChatDetail); 
 $(document).on("pageinit", "#new_chat_group", initNewChatGroup);
