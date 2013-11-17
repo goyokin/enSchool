@@ -12,7 +12,7 @@ var group = [];
 var users = [];
 var groups = [];
 var feeds = [];
-
+var currentId;
  
 var pictureSource;   // picture source
 var destinationType; // sets the format of returned value
@@ -103,8 +103,13 @@ $.fn.showChatDetail = function(contentData) {
           // Clone li element  
           console.log("eledata type " + eleData.type);
           var clone = eleData.type == "me" ? $("#chat_me").clone() : $("#chat_you_text").clone();
-          if (typeof  clone.find(".chatTime") != "undefined") {
-              clone.find(".chatTime").first().text(eleData.time);
+            alert(eleData.CreatedDate);
+          if (typeof  clone.find("#chatTime") != "undefined") {
+          alert("find chat time");
+          alert(eleData.CreatedDate);
+           clone.find("#chatTime").text(eleData.CreatedDate);
+	         clone.find("p").first().html(eleData.CreatedDate);
+             clone.find(".chatTime").first().text(eleData.CreatedDate);
           }
           
           clone.find("text_you").attr("text",eleData.Body);
@@ -125,6 +130,7 @@ $("#textinput").css("height", "10px");
 
 
 function onGetUserSuccess(data) {
+	users = data.records;
 	$(this).showChatList(data);
 	getNewGroups();
 	
@@ -143,7 +149,7 @@ $.fn.showChatList = function(data) {
     
     var eleData;
     
-    users = contentData;
+    
     for (var i = 0; i < contentData.length; i++) {
         eleData = contentData[i];
           // Clone li element         
@@ -153,6 +159,7 @@ $.fn.showChatList = function(data) {
         
        
         clone.find(":header").html(eleData.Name);
+
         /*
         clone.find("p").last().html(eleData.desc);
         clone.find("p").first().html(eleData.time);
@@ -172,6 +179,7 @@ $.fn.showChatList = function(data) {
         
           $("li").click(function(){
           alert($(this).find(".li_id").attr("id"));
+          currentId = $(this).find(".li_id").attr("id");
           getFeeds($(this).find(".li_id").attr("id"));
             
             });
@@ -371,6 +379,17 @@ var onChatSend = function() {
           clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
           $("#contentChat").append(clone);
           postMessage($("#chatInputText").val());
+          
+           setTimeout(function(){
+        	   var clone =  $("#chat_you").clone();
+          if (typeof  clone.find(".chatTime") != "undefined") {
+              clone.find(".chatTime").first().text("time later");
+          }
+          clone.find("pre").text($("#chatInputText").val());
+          clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
+          $("#contentChat").append(clone);
+            
+    }, 1000);    
     
 }
 
@@ -381,7 +400,7 @@ function getUsers() {
 function getFeeds(groupId) {
 	alert("getFeeds");
 	//forcetkClient.query("Select Id, Body from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
-forcetkClient.query("Select Id, Body, ParentId, InsertedById, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH and ParentId = '" + groupId + "' ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
+forcetkClient.query("Select Id, Body, ParentId, InsertedById, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH and ParentId = '" + groupId + "' ORDER BY CreatedDate ASC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
 // forcetkClient.query("Select Id, Body, ParentId, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
 }
 
@@ -391,14 +410,13 @@ function getFeedsAjax() {
 }
 
 function getGroups() {
-	alert("getGroups");
 	//forcetkClient.query("SELECT CollaborationGroupId from CollaborationGroupMember where Memberid = " + forcetkClient.userId, onSuccess, onError); 
 	//forcetkClient.query("SELECT Id, Name from CollaborationGroup where Name = 'Class 123'", onSuccessGroup, onError); 
 	forcetkClient.query("SELECT Id, Name from CollaborationGroup where Name = 'Class 123'", onSuccessGroup, onError);
 }
 
 function getNewGroups() {
-    alert("getGroups");
+   
     //forcetkClient.query("SELECT CollaborationGroupId from CollaborationGroupMember where Memberid = " + forcetkClient.userId, onSuccess, onError); 
     //forcetkClient.query("SELECT Id, Name, SmallPhotoUrl from CollaborationGroup where Name = 'Class 123'", onSuccessGroup, onError); 
     forcetkClient.query("SELECT Id, Name, SmallPhotoUrl from CollaborationGroup where OwnerId = '" + forcetkClient.userId + "'", onSuccessGroup, onError);
@@ -412,7 +430,7 @@ function getGroupsAjax() {
 function postMessage(msg) {
 	alert("postMessage");
 	var fields = {};
-    fields["ParentId"] = forcetkClient.userId;
+    fields["ParentId"] = currentId;
 	//alert(forcetkClient.id);
 	//fields["ParentId"] = forcetkClient.getId();
     fields["body"] = msg;
@@ -499,7 +517,6 @@ function getUserPhotoUrl(userId) {
 function onGetFeedsSuccess(data) {
 	alert('GetFeedsSuccess: ' + JSON.stringify(data));
 	
-	
 	    var eleData;
 	    var contentData = data.records;
     feeds = contentData;
@@ -507,14 +524,17 @@ function onGetFeedsSuccess(data) {
         eleData = contentData[i];
           // Clone li element  
           console.log("eledata type " + eleData.type);
-          var clone = eleData.type == "me" ? $("#chat_me").clone() : $("#chat_you_text").clone();
+          
+         var clone = forcetkClient.userId == eleData.InsertedById ? $("#chat_me").clone() : $("#chat_you_text").clone();
+          
           if (typeof  clone.find(".chatTime") != "undefined") {
-              clone.find(".chatTime").first().text(eleData.time);
+          	  var strtime = eleData.CreatedDate;
+          	  var timearr = strtime.split("T")[1].split(".")[0].split(":");
+          	  
+              clone.find(".chatTime").first().text(timearr[0]+":"+timearr[1]);
           }
-          
-          
-          
-          var photoUrl = getUserPhotoUrl(eleData.ParentId) + "?oauth_token=" + forcetkClient.sessionId;
+         
+          var photoUrl = getUserPhotoUrl(eleData.InsertedById) + "?oauth_token=" + forcetkClient.sessionId;
          
           	clone.find(".chatItemContent > .avatar").first().attr("src", photoUrl);
              clone.find("pre").text(eleData.Body);
