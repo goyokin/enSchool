@@ -714,8 +714,7 @@ clone.find("#smallImage").attr("src", data);
 
 
     function onCameraClick() {
-    	
-   		$("#popupPanel").panel("close");
+    	alert("camera click");
         capturePhoto();
 
     }
