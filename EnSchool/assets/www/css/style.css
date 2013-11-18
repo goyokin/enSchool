@@ -16,7 +16,9 @@ body {
  div .ui-btn-text {
      max-height: 50px;
  }
-.ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
+ 
+ 
+.content_index  .ui-li .ui-btn-inner a.ui-link-inherit, .content_index .ui-li-static.ui-li {
 padding: 0 50px;
 padding-left: 58px;
 display: block;

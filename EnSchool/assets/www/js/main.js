@@ -145,7 +145,6 @@ function onGetUserError(error) {
 
 $.fn.showChatList = function(data) {
     var contentData =  data.records;
-    alert('records ' + JSON.stringify(contentData));
     
     var eleData;
     
@@ -171,36 +170,19 @@ $.fn.showChatList = function(data) {
             clone.find(".unreadDot").show();
         }
         */
+        clone.show();
         $("#contentList").append(clone);
 
     }
     
    $("#contentList").listview("refresh");
-        
           $("#contentList > li").click(function(){
-          alert($(this).find(".li_id").attr("id"));
-          currentId = $(this).find(".li_id").attr("id");
-          getFeeds($(this).find(".li_id").attr("id"));
-            
+	          currentId = $(this).find(".li_id").attr("id");
+	          getFeeds($(this).find(".li_id").attr("id"));
           });
           
-         
     return;
     
-     contact_data = contentData;
-            
-            //console.log(data);
-              // TODO:: Do your initialization job
-            $(".cloudText").click(function(){
-                console.log("click"); 
-                
-            var target = $(this);
-            var dialog = $("#chatForwardDialog");
-            dialog.positionOn(target);
-
-            dialog.show(); 
-            
-            });
 };
 
 
@@ -217,8 +199,6 @@ $.fn.showNewChatGroupList = function(contentData) {
         clone.attr("id", eleData.id);
         clone.find(".nickName").html(eleData.nickname);
         clone.find(".avatar > img").attr("src", "./assets/icons/" + avartars[eleData.avatar]);
-        
-
         
         $("#new_chat_group_conent").append(clone);
          
@@ -400,27 +380,21 @@ function getUsers() {
 }
 
 function getTeacherUser() {
-	alert("getteacherusers");
 	forcetkClient.query("SELECT Id, Name, SmallPhotoUrl FROM User where Name = 'Teacher'", onGetTeacherUserSuccess, onGetUserError); 
 }
 
 function onGetTeacherUserSuccess(data) {
-	alert("ongetteacherusersuccess");
-	alert(JSON.stringify(data));
 	users = data.records;
-	forcetkClient.query("Select Id, Body, ParentId, InsertedById, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH and InsertedById = '" + users[0].Id + "' ORDER BY CreatedDate DESC, Id DESC", onGetMomentsFeedsSuccess, onGetFeedsError);
+	forcetkClient.query("Select Id, Body, ParentId, InsertedById, CreatedDate, ContentData, ContentFileName from FeedItem WHERE CreatedDate > LAST_MONTH and InsertedById = '" + users[0].Id + "' ORDER BY CreatedDate DESC, Id DESC", onGetMomentsFeedsSuccess, onGetFeedsError);
 }
 
 function getFeeds(groupId) {
-	alert("getFeeds");
 	//forcetkClient.query("Select Id, Body from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
 	forcetkClient.query("Select Id, Body, ParentId, InsertedById, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH and ParentId = '" + groupId + "' ORDER BY CreatedDate ASC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
 	// forcetkClient.query("Select Id, Body, ParentId, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
 }
 
 function getMomentsFeeds() {
-	alert("get moments feeds: " + forcetkClient.query);
-	
 	getTeacherUser();
 	//alert(users[0].Id);
 	
@@ -429,7 +403,6 @@ function getMomentsFeeds() {
 
 
 function onGetMomentsFeedsSuccess(data) {
-	alert("getmomentsfeed " + JSON.stringify(data));
 	onGetFeedsSuccess(data);
 	
 }
@@ -544,8 +517,6 @@ function getUserPhotoUrl(userId) {
     return users[0].SmallPhotoUrl;
 }
 function onGetFeedsSuccess(data) {
-	alert('GetFeedsSuccess: ' + JSON.stringify(data));
-	
 	    var eleData;
 	    var contentData = data.records;
     feeds = contentData;
@@ -555,6 +526,8 @@ function onGetFeedsSuccess(data) {
           console.log("eledata type " + eleData.type);
           
          var clone = forcetkClient.userId == eleData.InsertedById ? $("#chat_me").clone() : $("#chat_you_text").clone();
+         
+  
           
           if (typeof  clone.find(".chatTime") != "undefined") {
           	  var strtime = eleData.CreatedDate;
@@ -566,8 +539,13 @@ function onGetFeedsSuccess(data) {
           var photoUrl = getUserPhotoUrl(eleData.InsertedById) + "?oauth_token=" + forcetkClient.sessionId;
          
           	clone.find(".chatItemContent > .avatar").first().attr("src", photoUrl);
+          	
+          	       if (eleData.ContentFileName != null) {
+          	       console.log(eleData.ContentData + "?oauth_token=" + forcetkClient.sessionId);
+         	clone.find(".chatItemContent > .avatar").first().attr("src", "https://na15.salesforce.com"+ eleData.ContentData  + "?oauth_token=" + forcetkClient.sessionId);
+         }
              clone.find("pre").text(eleData.Body);
-          
+          clone.show();
           $("#contentChat").append(clone);
           console.log(clone);
     }
@@ -684,6 +662,7 @@ function onPhotoSuccess(data) {
 alert(clone.find("#smallImage").attr("src"));
 clone.find("#smallImage").attr("src", data);
 
+		  clone.show();
           $("#contentChat").append(clone);
           $('#popupBasic').popup("close");
           $('#popupBasic').hide();

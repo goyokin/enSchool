@@ -22,6 +22,7 @@
     <!-- include forcetk.mobilesdk for REST transaction support -->
     <script src="forcetk.mobilesdk.js"></script>
     <script type="text/javascript" src="./js/main.js"></script>
+    <link rel="stylesheet" href="./css/resource.css" />
     
     <script type="text/javascript">
             cordova.require("salesforce/plugin/oauth").getAuthCredentials(salesforceSessionRefreshed, getAuthCredentialsError);
@@ -36,7 +37,7 @@
         <div data-role="page" id="resource" >
 
             <div id="header_nav" data-role="header"  data-position="inline" data-theme="a">
-                <h1 class="ui-title" role="heading" id="nav_title">Me</h1>
+                <h1 class="ui-title" role="heading" id="nav_title">Resources</h1>
                    
             </div>
             <!-- /header -->
@@ -46,7 +47,7 @@
             <ul data-role="listview" data-inset="true" data-theme="a">
             <li>
             <a href="javascript:toMoments();" id="moments_href">
-                <img src="">
+                <img src="./assets/icons/moments.png">
                 <h3>Moments</h3>
             </a>
             </li>
@@ -54,7 +55,7 @@
          <ul data-role="listview" data-inset="true" data-theme="a">
             <li>
             <a href="http://www.engradepro.com">
-                <img src="./assets/icons/engrade.jpg" class="">
+                <img src="./assets/icons/engrade.png" class="">
                 <h3>Engrade</h3>
             </a>
             </li>
