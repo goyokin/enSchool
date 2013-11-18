@@ -22,9 +22,10 @@
     <!-- include forcetk.mobilesdk for REST transaction support -->
     <script src="forcetk.mobilesdk.js"></script>
         <script type="text/javascript" src="./js/main.js"></script>
-       
+        
+    <link rel="stylesheet" href="./css/chatter.css" />   
     <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/chatter.css" /> 
+     
    
 </head>
 	
@@ -76,11 +77,11 @@
               
             <div id="footer_nav" data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="b" style="margin:0;padding:0">
                <div data-role="navbar" data-iconpos="top">
-                <ul>
-            <li><a href="index.html" data-icon="new-chat-icon">Chats</a></li>
-            <li><a href="contacts.html" data-icon="contacts">Contacts</a></li>
-            <li><a href="resource.html" data-icon="compass">Resources</a></li>
-            <li><a href="profile.html" data-icon="self">Me</a></li>
+                               <ul >
+            <li class="footer_li"><a href="index.html" data-icon="new-chat-icon">Chats</a></li>
+            <li class="footer_li"><a href="contacts.html" data-icon="contacts">Contacts</a></li>
+            <li class="footer_li"><a href="javascript:toResource();" data-icon="compass" id="resource_index">Resources</a></li>
+            <li class="footer_li"><a href="profile.html" data-icon="self">Me</a></li>
              </ul>
                 <!-- /navbar -->
             </div><!-- /footer -->

@@ -97,6 +97,10 @@ height: 28px;
 background: url(../assets/icons/self.png);
 }
 
+.footer_li > .ui-btn-icon-top .ui-btn-inner .ui-icon {
+	margin-left:-13px;
+}
+
 .ui-icon-shadow {
 -moz-box-shadow:none;
 -webkit-box-shadow:none;
@@ -119,3 +123,8 @@ box-shadow: none;
 #popupPanel .ui-btn {
     margin: 2em 15px;
 }
+
+
+  a,input { outline:none; }
+    a:link,a:visited { color:white; text-decoration:none; }
+    a:hover, a:active { color:white; text-decoration:underline; }
