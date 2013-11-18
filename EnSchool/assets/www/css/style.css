@@ -132,6 +132,11 @@ box-shadow: none;
 }
 
 
-  a,input { outline:none; }
-    a:link,a:visited { color:white; text-decoration:none; }
-    a:hover, a:active { color:white; text-decoration:underline; }
+a,input { outline:none; }
+a:link,a:visited { color:white; text-decoration:none; }
+a:hover, a:active { color:white; text-decoration:underline; }
+    
+.ui_contacts > .ui-li-divider {
+	padding-top:0;
+    padding-bottom:0;
+}

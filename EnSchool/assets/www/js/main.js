@@ -728,10 +728,11 @@ clone.find("#smallImage").attr("src", data);
  
 
 function toResource() {
-	alert(forcetkClient);
 	window.location='resource.html';
-	window.forcetcClient = forcetkClient;
-	
+}
+
+function toContacts() {
+	window.location='contacts.html';
 }
 
 function initMoments() {
@@ -743,7 +744,34 @@ function initMoments() {
 	getMomentsFeeds();
 }
 
+function initContacts() {
+	cordova.require("salesforce/plugin/oauth").getAuthCredentials(salesforceSessionRefreshed, getAuthCredentialsError);
 
+    //register to receive notifications when autoRefreshOnForeground refreshes the sfdc session
+    document.addEventListener("salesforceSessionRefresh",salesforceSessionRefreshed,false);
+
+	getUsersList(onContactsSuccess, onContactsError);
+}
+
+function onContactsSuccess(data) {
+	var contacts = data.records;
+	var eleData;
+	for (var i = 0; i < contacts.length; i++) {
+		eleData = contacts[i];
+		var clone = $("#friendDetailLi").clone();
+		clone.find("#avatar").attr("src", eleData.SmallPhotoUrl + "?oauth_token=" + forcetkClient.sessionId);
+		clone.find("#nickName").text(eleData.Name);
+		$("#contacts_ul").append(clone);
+	}
+	$("#contacts_ul").listview("refresh");
+}
+
+function onContactsError(data) {
+	alert("contacts return error " + JSON.stringify(data));
+}
+function getUsersList(onSuccess, onError) {
+	forcetkClient.query("SELECT Id, Name, SmallPhotoUrl FROM User", onSuccess, onError); 
+}
 
 function toMoments() {
 	alert(forcetkClient);
@@ -758,3 +786,4 @@ $(document).on("pageinit", "#chat_list", initChatList);
 $(document).on("pageinit", "#chat_detail", initChatDetail); 
 $(document).on("pageinit", "#new_chat_group", initNewChatGroup);
 $(document).on("pageinit", "#moments", initMoments);
+$(document).on("pageinit", "#contacts", initContacts);
