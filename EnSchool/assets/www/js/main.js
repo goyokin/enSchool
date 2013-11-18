@@ -184,10 +184,7 @@ $.fn.showChatList = function(data) {
             
           });
           
-          $("#resource_index").click(function() {
-                alert("click resource_index, get moments");
-                window.location = "resource.html";
-	     });
+         
     return;
     
      contact_data = contentData;
@@ -402,13 +399,40 @@ function getUsers() {
 	forcetkClient.query("SELECT Id, Name, SmallPhotoUrl FROM User", onGetUserSuccess, onGetUserError); 
 }
 
+function getTeacherUser() {
+	alert("getteacherusers");
+	forcetkClient.query("SELECT Id, Name, SmallPhotoUrl FROM User where Name = 'Teacher'", onGetTeacherUserSuccess, onGetUserError); 
+}
+
+function onGetTeacherUserSuccess(data) {
+	alert("ongetteacherusersuccess");
+	alert(JSON.stringify(data));
+	users = data.records;
+	forcetkClient.query("Select Id, Body, ParentId, InsertedById, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH and InsertedById = '" + users[0].Id + "' ORDER BY CreatedDate DESC, Id DESC", onGetMomentsFeedsSuccess, onGetFeedsError);
+}
+
 function getFeeds(groupId) {
 	alert("getFeeds");
 	//forcetkClient.query("Select Id, Body from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
-forcetkClient.query("Select Id, Body, ParentId, InsertedById, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH and ParentId = '" + groupId + "' ORDER BY CreatedDate ASC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
-// forcetkClient.query("Select Id, Body, ParentId, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
+	forcetkClient.query("Select Id, Body, ParentId, InsertedById, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH and ParentId = '" + groupId + "' ORDER BY CreatedDate ASC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
+	// forcetkClient.query("Select Id, Body, ParentId, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
 }
 
+function getMomentsFeeds() {
+	alert("get moments feeds: " + forcetkClient.query);
+	
+	getTeacherUser();
+	//alert(users[0].Id);
+	
+}
+
+
+
+function onGetMomentsFeedsSuccess(data) {
+	alert("getmomentsfeed " + JSON.stringify(data));
+	onGetFeedsSuccess(data);
+	
+}
 function getFeedsAjax() {
     alert("getFeedsAjax");
     forcetkClient.ajax("/v29.0/chatter/feeds/to/me", onGetFeedsSuccess, onGetFeedsError); 
@@ -719,7 +743,30 @@ $( "#popupPanel" ).on({
  
         $( "#popupPanel" ).css( "height", h );
     }
-});    
+});  
+
+function toResource() {
+	alert(forcetkClient);
+	window.location='resource.html';
+	window.forcetcClient = forcetkClient;
+	
+}
+
+function initMoments() {
+	cordova.require("salesforce/plugin/oauth").getAuthCredentials(salesforceSessionRefreshed, getAuthCredentialsError);
+
+    //register to receive notifications when autoRefreshOnForeground refreshes the sfdc session
+    document.addEventListener("salesforceSessionRefresh",salesforceSessionRefreshed,false);
+
+	getMomentsFeeds();
+}
+
+
+
+function toMoments() {
+	alert(forcetkClient);
+	window.location='moments.html';
+}  
 
 $("#pic_camera").bind("click", function(){onCameraClick();});
 $("#pic_album").bind("click", function(){onPhotoClick();});
@@ -728,3 +775,4 @@ $("#pic_cancel").bind("click", function(){$('#popupBasic').popup('close');});
 $(document).on("pageinit", "#chat_list", initChatList); 
 $(document).on("pageinit", "#chat_detail", initChatDetail); 
 $(document).on("pageinit", "#new_chat_group", initNewChatGroup);
+$(document).on("pageinit", "#moments", initMoments);
