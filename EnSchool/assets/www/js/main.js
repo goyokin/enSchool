@@ -444,6 +444,44 @@ function postMessage(msg) {
     forcetkClient.create("FeedItem", fields, onPostMessageSuccess, onError); 
 }
 
+/*********************************
+  Qing: 
+  Desciptions: Post image to backend
+  Params: 
+    image: a base64 string with JPG image content (Don't put "data:image/jpeg;base64," here!)
+  Return: null
+*/
+function postImage(image) {
+  alert("post image");
+  postedImage = "data:image/jpeg;base64," + image;
+
+  var fields = {};
+  fields["ParentId"] = currentId;
+  fields["ContentFileName"] = "myImage.jpg";
+  fields["ContentData"] = image;
+  fields["Type"] = "ContentPost";
+  forcetkClient.create("FeedItem", fields, onPostImageSuccess, onError); 
+}
+
+/*********************************
+  Qing: 
+  Desciptions: success callback
+*/
+function onPostImageSuccess(data) {
+  var clone =  $("#chat_me_photo").clone();
+  if (typeof  clone.find(".chatTime") != "undefined") {
+      clone.find(".chatTime").first().text("time later");
+  }
+  alert(clone.find("#smallImage").attr("src"));
+  clone.find("#smallImage").attr("src", postedImage);
+
+       clone.show();
+            $("#contentChat").append(clone);
+            $('#popupBasic').popup("close");
+            $('#popupBasic').hide();
+}
+
+
 function onPostMessageSuccess(data) {
 	alert(JSON.stringify(data));
 }
@@ -650,71 +688,51 @@ function onGetFeedsError(error) {
     }
 
     
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoDataSuccess(imageData) {
-      onPhotoSuccess("data:image/jpeg;base64," + imageData);
-      
-    }
 
     // Called when a photo is successfully retrieved
     //
 
-function onPhotoSuccess(data) {
-  alert("MESSAGE to SEND: ");
-      var clone =  $("#chat_me_photo").clone();
-          if (typeof  clone.find(".chatTime") != "undefined") {
-              clone.find(".chatTime").first().text("time later");
-          }
-alert(clone.find("#smallImage").attr("src"));
-clone.find("#smallImage").attr("src", data);
-
-		  clone.show();
-          $("#contentChat").append(clone);
-          $('#popupBasic').popup("close");
-          $('#popupBasic').hide();
-                    return;
-}
-
-    function onPhotoURISuccess(imageURI) {
-      onPhotoSuccess(imageURI);
-      
+    function onPhotoSuccess(data) {
+      postImage(data);
+      return;
     }
+
 
     // A button will call this function
     //
     function capturePhoto() {
       // Take picture using device camera and retrieve image as base64-encoded string
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
-        destinationType: destinationType.DATA_URL });
-    }
-
-    // A button will call this function
-    //
-    function capturePhotoEdit() {
-      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
-      destinationType: destinationType.DATA_URL });
+      navigator.camera.getPicture(onPhotoSuccess, onFail, { 
+        quality: 50,
+        destinationType: destinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 100,
+        targetHeight: 100
+      });
     }
 
     // A button will call this function
     //
     function getPhoto(source) {
       // Retrieve image file location from specified source
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
-        destinationType: destinationType.FILE_URI,
-        sourceType: source });
+      navigator.camera.getPicture(onPhotoSuccess, onFail, { quality: 50,
+        destinationType: destinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY, 
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 100,
+        targetHeight: 100
+        });
     }
 
     // Called if something bad happens.
     //
     function onFail(message) {
-      alert('Failed because: ' + message);
+      //alert('Failed because: ' + message);
     }
 
 
     function onCameraClick() {
-    	alert("camera click");
         capturePhoto();
 
     }
