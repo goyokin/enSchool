@@ -94,6 +94,7 @@ $.fn.positionOn = function(element) {
   });
 };
 
+
 $.fn.showChatDetail = function(contentData) {
     console.log(contentData);
     var eleData;
@@ -117,16 +118,18 @@ $.fn.showChatDetail = function(contentData) {
           console.log(clone);
     }
         $(".cloudText").click(function(){
-                console.log("click"); 
+            console.log("click"); 
                 
             var target = $(this);
             var dialog = $("#chatForwardDialog");
             dialog.positionOn(target);
-$("#textinput").css("height", "10px");
+			$("#textinput").css("height", "10px");
             dialog.show(); 
             
             });
-};
+           
+} 
+
 
 
 function onGetUserSuccess(data) {
@@ -180,6 +183,8 @@ $.fn.showChatList = function(data) {
 	          currentId = $(this).find(".li_id").attr("id");
 	          getFeeds($(this).find(".li_id").attr("id"));
           });
+  
+  	
           
     return;
     
@@ -563,6 +568,17 @@ $("#textinput").css("height", "10px");
             });
 	
 	
+	    $("#popupPanel").on({
+    	popupbeforeposition: function() {
+    	    var h = $( window ).height();
+        	
+ 
+        	$( "#popupPanel" ).css( "height", 240 );
+        	$( "#popupPanel" ).css( "margin-bottom", "-270px" );
+        	$( "#popupPanel" ).css( "padding-bottom", "-10px" );
+        }
+	}); 
+	
 }
 
 
@@ -633,15 +649,6 @@ function onGetFeedsError(error) {
         //logToConsole("getAuthCredentialsError: " + error);
     }
 
-/*
-    function onCameraClick() {
-        alert("camera click");
-    }
-    function onPhotoClick() {
-        alert("Photo click");
-    }
-    
-    */
     
     // Called when a photo is successfully retrieved
     //
@@ -707,22 +714,18 @@ clone.find("#smallImage").attr("src", data);
 
 
     function onCameraClick() {
+    	
+   		$("#popupPanel").panel("close");
         capturePhoto();
 
     }
     function onPhotoClick() {
         getPhoto(pictureSource.PHOTOLIBRARY);
+        $("#popupPanel").panel( "close" );
         //getPhoto(pictureSource.SAVEDPHOTOALBUM);
     }
     
-$( "#popupPanel" ).on({
-    popupbeforeposition: function() {
-        var h = $( window ).height();
-        alert("window heihgt" + h);
  
-        $( "#popupPanel" ).css( "height", h );
-    }
-});  
 
 function toResource() {
 	alert(forcetkClient);

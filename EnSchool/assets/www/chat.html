@@ -17,6 +17,9 @@
         <link rel="stylesheet" href="./css/chatter.css" />  
         <link rel="stylesheet" href="./css/style.css" />
     <!--    <link rel="stylesheet" href="./css/overlaypanel.css"/>               -->
+    <script type="text/javascript">
+
+    </script>
     </head>
 
 
@@ -24,7 +27,7 @@
      
         <div data-role="page" id="chat_detail">
         
-            <div id="header_nav" data-role="header"  data-position="inline" data-theme="b">
+            <div id="header_nav" data-role="header"  data-position="inline" data-theme="a">
                 <h1 class="ui-title" role="heading" id="nav_title">Chats</h1>
                 <a href="index.html" data-icon="gear" class="ui-btn-right">Setting</a>
             </div>
@@ -111,13 +114,16 @@
    
 </div>              
 
-<a href="#popupPanel" data-rel="popup" data-transition="slide" data-position-to="window" data-role="button">Open panel</a>
+
  
 <div data-role="popup" id="popupPanel" data-corners="false" data-theme="none" data-shadow="false" data-tolerance="0,0">
  <a href="javascript:onCameraClick();" data-role="button" data-theme="a" data-icon="back" data-mini="true">Camera</a>
+ <a href="javascript:javascript:onPhotoClick();" data-role="button" data-theme="a" data-icon="back" data-mini="true">Photo</a>
+ <a href="javascript:$("#popupPanel").panel("close");" data-role="button" data-theme="a" data-icon="back" data-mini="true"  data-rel="close">Cancel</a>
+ <!--
     <button data-theme="a" data-icon="back" data-mini="true" id="pic_camera">Camera</button>
     <button data-theme="a" data-icon="grid" data-mini="true" id="pic_album">Album</button>
-    <button data-theme="a" data-icon="search" data-mini="true" id="pic_cancel">Cancel</button>
+    <button data-theme="a" data-icon="search" data-mini="true" id="pic_cancel">Cancel</button>-->
  
 </div>
                  
@@ -137,7 +143,8 @@
                     <a class="chatSend" style="margin:0;padding:1px 0" href="javascript:onChatSend();"><b>Send</b></a>
                     </div>
                     <div style="float:right;width:15%;">
-                    <a class="chatSend" style="margin:0;padding:1px 0;width:40px;margin-right:20px;"  data-rel="popup" data-dismissible="true" href="javascript:$('#popupBasic').popup('open');$('#popupBasic').show();"><b>+</b></a>
+                      
+<a class="chatSend" style="margin:0;padding:1px 0;width:40px;margin-right:20px;"  data-rel="popup" data-transition="slide" data-position-to="window"  href="#popupPanel"><b>+</b></a>                    
 
                     </div>
                     
