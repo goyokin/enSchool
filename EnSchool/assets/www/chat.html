@@ -36,7 +36,6 @@
             <!--<div data-role="content"  >-->
             <div data-role="content" id="contentChat">        
                 <div class="chatItem me" id="chat_me" style="display:none">  
-
                     <div class="chatItemContent"> 
                         <img class="avatar" src="./assets/icons/hannahca.jpg" onerror="reLoadImg(this)" un="avatar_wxid_lsf0x9atpogz12" title="" click="showProfile" username="wxid_lsf0x9atpogz12"> 
                         <div class="cloud cloudText" un="cloud_2030211729" msgid="2030211729">
@@ -48,10 +47,19 @@
                  </div> 
                   </div>
                    <div class="cloudArrow "></div>  </div>  </div>  </div>   </div>        
-<div class="chatItem you" id="chat_me_photo" style="display:none">  
+					<div class="chatItem you" id="chat_me_photo" style="display:none">  
                     <div class="time"> <span class="timeBg left"></span> <span id="chatTime">10:00</span> <span class="timeBg right"></span> </div>  
                     <div class="chatItemContent"> 
                 <img class="avatar" src="./assets/icons/jerry.jpg" title="KW" click="showProfile" username="F100000347971931"> 
+                
+                     
+                <div class="cloud cloudImg" style="display:none" id="cloudImg_me">
+                	 <div class="cloudPannel" style=""> <div class="sendStatus">   </div> 
+                	 	<div class="cloudBody"> <div class="cloudContent">  
+                	 		<!--img msg-->      <img id="cloudImg_me_img" class="zoomIn imageBorder" src="/cgi-bin/mmwebwx-bin/webwxgetmsgimg?type=slave&amp;MsgID=2030271241" click="popImg" rawsrc="/cgi-bin/mmwebwx-bin/webwxgetmsgimg?MsgID=2030271241" onload="WebMM.widget.preLoadImg('/cgi-bin/mmwebwx-bin/webwxgetmsgimg?MsgID=2030271241');" onerror="reLoadImg(this)">                                        </div>  </div> 
+                	 		<div class="cloudArrow "></div>  </div>  </div>
+                
+                
                 <div class="cloud cloudText" un="cloud_2030211748" msgid="2030211748"> 
                 <div class="cloudPannel" style=""> 
                     <div class="sendStatus">   </div>
@@ -76,6 +84,8 @@
                     <div class="time"> <span class="timeBg left"></span> <span class="chatTime">10:00</span> <span class="timeBg right"></span> </div>  
                     <div class="chatItemContent"> 
                 <img class="avatar" src="./assets/icons/jerry.jpg" title="KW" click="showProfile" username="F100000347971931"> 
+                
+                
                 <div class="cloud cloudText" un="cloud_2030211748" msgid="2030211748"> 
                 <div class="cloudPannel" style=""> <div class="sendStatus">   </div>
                  <div class="cloudBody"> 
@@ -83,6 +93,7 @@
                                                   <pre style="white-space:pre-wrap">
 <img style="display:block;width:60px;height:60px;" classs="smallImage" src="./assets/icons/jerry.jpg" />
             </pre>  </div>  </div> <div class="cloudArrow "></div>  </div>  </div>  </div>   </div>
+
 
 
                 <div data-role="controlgroup" data-type="horizontal" style="display:none" id="chatForwardDialog">
