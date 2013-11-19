@@ -348,6 +348,8 @@ if (forcetk.Client === undefined) {
                     xhr.setRequestHeader('X-User-Agent', that.userAgentString);
                 }
                 xhr.setRequestHeader('Cache-Control', 'no-store');
+                //added by us
+                xhr.setRequestHeader('X-Connect-Bearer-Urls', 'true');
             }
         });
     }
