@@ -565,6 +565,7 @@ function onGetFeedsSuccess(data) {
     feeds = contentData;
        for (var i = 0; i < contentData.length; i++) {
         eleData = contentData[i];
+        if (eleData.Body != null) {
           // Clone li element  
           console.log("eledata type " + eleData.type);
           
@@ -573,24 +574,26 @@ function onGetFeedsSuccess(data) {
   
           
           if (typeof  clone.find(".chatTime") != "undefined") {
-          	  var strtime = eleData.CreatedDate;
-          	  var timearr = strtime.split("T")[1].split(".")[0].split(":");
-          	  
+              var strtime = eleData.CreatedDate;
+              var timearr = strtime.split("T")[1].split(".")[0].split(":");
+              
               clone.find(".chatTime").first().text(timearr[0]+":"+timearr[1]);
           }
          
           var photoUrl = getUserPhotoUrl(eleData.InsertedById) + "?oauth_token=" + forcetkClient.sessionId;
          
-          	clone.find(".chatItemContent > .avatar").first().attr("src", photoUrl);
-          	
-          	       if (eleData.ContentFileName != null) {
-          	       console.log(eleData.ContentData + "?oauth_token=" + forcetkClient.sessionId);
-         	clone.find(".chatItemContent > .avatar").first().attr("src", "https://na15.salesforce.com"+ eleData.ContentData  + "?oauth_token=" + forcetkClient.sessionId);
+            clone.find(".chatItemContent > .avatar").first().attr("src", photoUrl);
+            
+                   if (eleData.ContentFileName != null) {
+                   console.log(eleData.ContentData + "?oauth_token=" + forcetkClient.sessionId);
+          clone.find(".chatItemContent > .avatar").first().attr("src", "https://na15.salesforce.com"+ eleData.ContentData  + "?oauth_token=" + forcetkClient.sessionId);
          }
              clone.find("pre").text(eleData.Body);
           clone.show();
           $("#contentChat").append(clone);
           console.log(clone);
+        }
+        
     }
     
     
