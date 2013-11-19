@@ -55,7 +55,7 @@ html, body{
     /* Elements */
     
     html, body { height:100%; background:#4E5359 url(../assets/icons/bg_universal.png) repeat 0 0; 
-        color:#666; font:14px/1.5 Helvetica,"微软雅黑","黑体",Arial,Tahoma; text-align:center; overflow-y: hidden;}
+        color:#666; font:14px/1.5 Helvetica,"å¾®è½¯é›…é»‘","é»‘ä½“",Arial,Tahoma; text-align:center; overflow-y: hidden;}
     a,input { outline:none; }
     a:link,a:visited { color:#55a; text-decoration:none; }
     a:hover, a:active { color:#55a; text-decoration:underline; }
@@ -94,7 +94,7 @@ html, body{
     ::-webkit-scrollbar {width:8px;height:12px;-webkit-border-radius:12px;}
     ::-webkit-scrollbar-thumb {background:#6B747A;-webkit-border-radius:12px;}
     ::-webkit-scrollbar-track {background: #F5F5F5;}
-    /*自定义滚动条*/
+    /*è‡ªå®šä¹‰æ»šåŠ¨æ�¡*/
     .chatPanel .chatScorll::-webkit-scrollbar {width:8px; height:12px; -webkit-border-radius:12px;}
     .chatPanel .chatScorll::-webkit-scrollbar-thumb {background:#6B747A;-webkit-border-radius:12px; }
     .chatPanel .chatScorll::-webkit-scrollbar-track {background: #fff;}
@@ -409,7 +409,7 @@ html, body{
         margin: -32px 0px 0 9px;
     }
     /*chat list search and operate end*/
-    /*2.1星标好友*/
+    /*2.1æ˜Ÿæ ‡å¥½å�‹*/
     .chatPanel .listContentWrap .listGroupTitle {
         background: none repeat scroll 0 0 #DCE2E6;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -430,7 +430,7 @@ html, body{
     }
     
     /* Universal */
-    /* 通用关闭按钮 */
+    /* é€šç”¨å…³é—­æŒ‰é’® */
     a.ico_close_circle,
     a.ico_close_circle_blue { 
         display:block; position:absolute; top:-10px; right:-11px; overflow:hidden; 
@@ -445,7 +445,7 @@ html, body{
     .clear { clear:both}
     .hide {display:none;}
     
-    /*通用遮罩层*/
+    /*é€šç”¨é�®ç½©å±‚*/
     .mask {
         position: absolute;
         top: 0;
@@ -459,7 +459,7 @@ html, body{
     }
     .trans {opacity:0;}
     
-    /*通用对话弹窗*/
+    /*é€šç”¨å¯¹è¯�å¼¹çª—*/
     .dialog {
         position: absolute;
         width: 328px;
@@ -585,7 +585,7 @@ html, body{
         background-position: -71px -462px;
     }
     
-    /* 通用按钮 */
+    /* é€šç”¨æŒ‰é’® */
     
     a.btnPrimary {margin:13px auto;display:block;height:30px; width:120px; text-align:center; text-decoration:none; border:1px solid #6486D3; border-radius:4px; box-shadow: 0 1px 3px #d3d3d3; font-size:16px; line-height:30px; text-shadow:0 -1px 0 #4f739f;color:#fff;
                     background:#588ed1; 
@@ -626,7 +626,7 @@ html, body{
     .clrLeft { clear:left; height:1px; overflow:hidden; }
     .clrRight { clear:right; height:1px; overflow:hidden; }
     
-    /*登录页*/
+    /*ç™»å½•é¡µ*/
     .loginPanel { position:absolute; left:400px; width:500px; height:380px; border:1px solid #ddd; 
         border-radius:4px; text-align:center; }
     .loginPanel .title { border-radius:4px 4px 0 0; height:50px; 
@@ -640,10 +640,10 @@ html, body{
     .loginPanel .errorMsg { display:none; }
     .loginPanel a.operatorBtn { margin-top:10px; }
     
-    /*总面板*/
+    /*æ€»é�¢æ�¿*/
     .chatPanel { position:relative; margin:0 auto; padding:40px 0 30px 0; width:962px;  border-radius:4px; text-align:center; }
     
-    /*.chatPanel .title { position:absolute; right:0; }？？？*/
+    /*.chatPanel .title { position:absolute; right:0; }ï¼Ÿï¼Ÿï¼Ÿ*/
     
     .chatPanel .content { position: relative;z-index:2;}
     
@@ -655,7 +655,7 @@ html, body{
         height:65px;
     }
     
-    /*左面板-人物*/
+    /*å·¦é�¢æ�¿-äººç‰©*/
     /* height:654px; */
     .chatPanel .list { position:relative; float:left; width:276px; 
          border-radius:6px; z-index:99; border:1px solid #424448; box-shadow:0 2px 6px #313131; }
@@ -674,11 +674,11 @@ html, body{
         height:39px;
         border-radius: 5px 5px 0 0;
     }
-    /*搜索栏*/
+    /*æ�œç´¢æ �*/
     .chatPanel .search { background-color:#f0f0f0; border-top:1px solid #fff; border-bottom:1px solid #ddd; }
     .chatPanel .searchText { border:1px solid #f0f0f0; }
     
-    /*个人头像资料*/
+    /*ä¸ªäººå¤´åƒ�èµ„æ–™*/
     .chatPanel .myProfile { /*float:right; z-index:99;*/width:100%; display:block; }
     .chatPanel .myProfile .avatar { position: absolute; top: -26px; left: 5px; width: 68px; height: 68px; 
         background: url(../images/border_myprofile_avatar.png) no-repeat; z-index: 101;
@@ -686,7 +686,7 @@ html, body{
         background:url(../images/border_myprofile_avatar.ie.png) no-repeat\0;
     }
     
-    /*头像图片，缺class*/
+    /*å¤´åƒ�å›¾ç‰‡ï¼Œç¼ºclass*/
     .chatPanel .myProfile img { 
         position: absolute;
         top: -22px;
@@ -708,7 +708,7 @@ html, body{
         word-wrap : normal;
         text-overflow: ellipsis;
         white-space: nowrap;
-        font-family:'微软雅黑',Helvetica, Arial, sans-serif; 
+        font-family:'å¾®è½¯é›…é»‘',Helvetica, Arial, sans-serif; 
         text-align: left;
         float:left;
     }
@@ -722,7 +722,7 @@ html, body{
     .chatPanel .info a{
         float:left;
     } 
-    /*头像下的未读总数*/
+    /*å¤´åƒ�ä¸‹çš„æœªè¯»æ€»æ•°*/
     .myProfile .unreadTotalCount {
         position: absolute;
         width: 25px;
@@ -745,7 +745,7 @@ html, body{
         background-position: -72px -670px;
         text-decoration: none;
     }
-    /*人物列表*/
+    /*äººç‰©åˆ—è¡¨*/
     .chatPanel .listContentWrap {
         width:100%;
         height: 452px;
@@ -768,7 +768,7 @@ html, body{
     .chatPanel .listContent .thumb .end { overflow: hidden; height: 5px; width: 13px; }
     .chatPanel .listContent .listDesc { padding:20px 0; text-align:center; font-size:12px;/*margin-top:-30px;*/ border-top:1px solid #fff;}
     
-    /*单个人物条*/
+    /*å�•ä¸ªäººç‰©æ�¡*/
     .chatPanel .chatListColumn { position:relative; padding: 7px 10px; /*border-bottom-width:1px; border-bottom-style:solid;*/ text-align:left;_padding-right:10px; /*ie6*/}
     .chatPanel .chatListColumn .avatar_wrap { line-height:0; float:left; margin-right:10px;/*box-shadow: 0px 1px 2px gray;*/ }
     .chatPanel .chatListColumn .avatar { width:42px; height:42px;border-radius:0; /*box-shadow:0px 1px 2px #919191;*/background:#a4a7b8;/*border-top:1px solid #aaa;*/border:1px solid #fff;}
@@ -830,7 +830,7 @@ html, body{
         border-bottom: 1px solid #D5D6D7;
         text-shadow: 0 1px 0 white;
         cursor: pointer;
-        height: 45px;/*当出现表情的时候，会被撑高1px，加个height以限高*/
+        height: 45px;/*å½“å‡ºçŽ°è¡¨æƒ…çš„æ—¶å€™ï¼Œä¼šè¢«æ’‘é«˜1pxï¼ŒåŠ ä¸ªheightä»¥é™�é«˜*/
         overflow: hidden;
      }
     .chatPanel .chatListColumn .nickName { 
@@ -844,7 +844,7 @@ html, body{
     }
     .chatPanel .chatListColumn .desc  { color:#B6B6B6; }
     
-    /*下拉加载更多*/
+    /*ä¸‹æ‹‰åŠ è½½æ›´å¤š*/
     .chatPanel a.loadMoreConv {
         display:block;
         text-align:center;
@@ -918,7 +918,7 @@ html, body{
         margin-left: -138px;
     }
     
-    /*被选中人物条*/
+    /*è¢«é€‰ä¸­äººç‰©æ�¡*/
     .chatPanel .listContent div.activeColumn {
         border-top:1px solid #8598AC; 
         border-bottom:1px solid #C9CED3;
@@ -965,11 +965,11 @@ html, body{
     .chatPanel .activeColumn .lightText { /*color:#fff; text-shadow:0 -1px 0 #3e627e; */ }
   .chatPanel .activeColumn .edited { display: none;}
     
-    /*会话窗体*/
+    /*ä¼šè¯�çª—ä½“*/
     .chatPanel .chat { margin-left:312px; border-radius:6px; box-shadow:0 2px 6px #313131;z-index:20;/*ie hack*/_height: 400px;}
     .chatPanel .chatContainer { /*background:#fff;*/ position:relative; border-radius:2px 2px 6px 6px; -webkit-border-radius:2px 2px 6px 6px; -moz-border-radius:2px 2px 6px 6px; border:1px solid #424448;/*border:1px solid #E2E2E2;*//*ie hack*/_height: 400px; overflow:hidden; }
     
-    /*窗体头部标题*/
+    /*çª—ä½“å¤´éƒ¨æ ‡é¢˜*/
     .chatPanel .chatTitle { height:40px;
         border-top:1px solid #9BA3AE;
         border-bottom:1px solid #333; 
@@ -1005,13 +1005,13 @@ html, body{
         overflow:hidden;
         padding-top: 10px;
         font-size:14px;
-        font-family:'微软雅黑';
+        font-family:'å¾®è½¯é›…é»‘';
         /*color: #383E45;*/
         color:#fff;
         text-shadow:none;
     }
     
-    /*会话内容窗体*/
+    /*ä¼šè¯�å†…å®¹çª—ä½“*/
     .chatPanel .chatScorll { height:390px; width:100%; min-height:200px; overflow:hidden; overflow-y:auto; 
         /*border-bottom:1px solid #bebebe;*/ background-color:#EFF3F7; }
     
@@ -1058,12 +1058,12 @@ html, body{
         min-height: 0;
         min-width: 0;
     }
-    /*我的气泡*/
+    /*æˆ‘çš„æ°”æ³¡*/
     /*.me .avatar { float:right; margin-right:18px; }*/
     .me .avatar { float:right; margin-right:0px; }
     .me .cloud { /*position:relative;*/ float:right; min-width:50px; max-width:230px; margin:0 15px 0 0;}
     
-    /*文字气泡*/
+    /*æ–‡å­—æ°”æ³¡*/
     .me .cloudText .cloudBody { 
         -moz-border-top-colors:none;
         -moz-border-right-colors:none;
@@ -1379,7 +1379,7 @@ html, body{
         right:-12px\9;
     }
     /*you file end*/
-    /*纯图片、视频气泡*/
+    /*çº¯å›¾ç‰‡ã€�è§†é¢‘æ°”æ³¡*/
     .me .cloudVideo .cloudBody {
         border-width: 8px 8px 9px;
         -moz-border-image: url(../assets/icons/cloud_img_body_white.png) 8 8 9 8 stretch;
@@ -1405,10 +1405,10 @@ html, body{
     .me .cloudVideo .cloudArrow { position: absolute; right:-8px; top:10px; width:17px;height: 24px; 
         background: url(../images/cloud/cloud_img_arrow_white.png) no-repeat;
         right:-12px\9;
-        background: url(../assets/icons/cloud_text_arrow_white.png) no-repeat\9; }
+        background: url(../icons/assets/cloud_text_arrow_white.png) no-repeat\9; }
     
     
-    /*语音气泡*/
+    /*è¯­éŸ³æ°”æ³¡*/
     .me .cloudVoice { margin-right:10px;}
     .me .cloudVoice .cloudBody{
         position: relative;
@@ -1496,10 +1496,10 @@ html, body{
     .me .sendStatus .iconSendFailed:active{
         background: url(../images/icon_chat.png) no-repeat 50% -240px;
     }
-    /*对方的气泡*/
+    /*å¯¹æ–¹çš„æ°”æ³¡*/
     .you .avatar { float:left; }
     .you .cloud{ /*position:relative;8.3*/float:left; min-width:50px; max-width:230px; margin:0 0 0 15px; }
-    /*文字气泡*/
+    /*æ–‡å­—æ°”æ³¡*/
     .you .cloudText .cloudBody { 
         -moz-border-top-colors:none;
         -moz-border-right-colors:none;
@@ -1549,15 +1549,15 @@ html, body{
     
     .you .cloudText .cloudArrow { position: absolute; left: -6px; top: 11px; width: 13px; height: 24px;
         background: url(../assets/icons/bubble_left_guid.png) no-repeat; }
-    /*纯图片、视频气泡*/
+    /*çº¯å›¾ç‰‡ã€�è§†é¢‘æ°”æ³¡*/
     
     .you .cloudImg .cloudBody,
     .you .cloudVideo .cloudBody {
         /*border-width: 8px 8px 9px;
-        -moz-border-image: url(../images/cloud/cloud_img_body_green.png) 8 8 9 8 stretch;
-        -webkit-border-image: url(../images/cloud/cloud_img_body_green.png) 8 8 9 8 stretch;
-        -o-border-image: url(../images/cloud/cloud_img_body_green.png) 8 8 9 8 stretch;
-        border-image: url(../images/cloud/cloud_img_body_green.png) 8 8 9 8 stretch;
+        -moz-border-image: url(../assets/icons/cloud_img_body_green.png) 8 8 9 8 stretch;
+        -webkit-border-image: url(../assets/icons/cloud_img_body_green.png) 8 8 9 8 stretch;
+        -o-border-image: url(../assets/icons/cloud_img_body_green.png) 8 8 9 8 stretch;
+        border-image: url(../assets/icons/cloud_img_body_green.png) 8 8 9 8 stretch;
         border-style:solid;*/
         -moz-border-top-colors: none;
         -moz-border-right-colors: none;
@@ -1630,10 +1630,10 @@ html, body{
         height: 25px;
         right: -13px;
         top: 8px;
-        background: url(../assets/icons/cloud_text_arrow_white.png) no-repeat 0 0;
+        background: url(../icons/assets/cloud_text_arrow_white.png) no-repeat 0 0;
     }
 
-    /*语音气泡*/
+    /*è¯­éŸ³æ°”æ³¡*/
     .you .cloudVoice { margin-left:10px;}
     .you .cloudVoice .cloudBody{
         position: relative;
@@ -1897,7 +1897,7 @@ html, body{
          height: 24px;
         background: url(../images/cloud/bubble_openapi.png) no-repeat;
     }
-    /* 加载更多消息 */
+    /* åŠ è½½æ›´å¤šæ¶ˆæ�¯ */
     .chatItem.chatListloadingMoreMsg{
         position: absolute;
         top:10px;
@@ -1913,7 +1913,7 @@ html, body{
     .customEmoji{
         width:100px;
     }
-    /* 会话操作区 */
+    /* ä¼šè¯�æ“�ä½œåŒº */
     .emojiPanel { position:absolute; zoom:1; z-index: 120; }
     .bottle_mail .fast_rly .faceWrap{ bottom:94px; left:15px;}
     .replyContainer .faceWrap,.replyContainer .touchWrap,.replyContainer .sendImgWrap,.replyContainer .trueBottleWrap,.penfriendWrap,.close_interact_wrap{ top:14px; bottom:auto; left:68px; }
@@ -2087,10 +2087,10 @@ html, body{
         margin:0px;    
     }
     ul.faceTab a:link, ul.faceTab a:visited{
-        display:block;                        /* 块元素 */
+        display:block;                        /* å�—å…ƒç´  */
         color:#6B6B6B;
         line-height:21px;
-        font-family:Helvetica,Arial,'宋体',sans-serif;
+        font-family:Helvetica,Arial,'å®‹ä½“',sans-serif;
         font-size:12px;
         font-weight: normal;
         text-decoration:none;
@@ -2234,7 +2234,7 @@ html, body{
         float:left;
         margin:3px 9px 0px;
     }
-    /*查看大图*/
+    /*æŸ¥çœ‹å¤§å›¾*/
     .slidePic { position:absolute; float:left; }
     .slidePic a.iconClose{
         position: fixed;
@@ -2299,7 +2299,7 @@ html, body{
         height:108px;
         background:url(../images/illustration_chat.png) no-repeat scroll 0 -170px transparent;
     }
-    /*功能图标*/
+    /*åŠŸèƒ½å›¾æ ‡*/
     .chatPanel .inputArea { padding:14px 10px 0 5px; height:43px;}
     
     .chatPanel .inputArea .attach { float: left;}
@@ -2345,7 +2345,7 @@ html, body{
         border:none; 
         border-bottom:1px solid #fff;
         border:1px solid #ccc\9;
-        font:14px/1.5 Helvetica,"微软雅黑","黑体",Arial,Tahoma;
+        font:14px/1.5 Helvetica,"å¾®è½¯é›…é»‘","é»‘ä½“",Arial,Tahoma;
         line-height:1.2em;
         resize: none;
     }
@@ -2640,7 +2640,7 @@ background:#ECECEC;
     }
 
     .chatPanel .chatScroll { border-bottom:1px solid #ddd; }
-    /* 视频播放 */
+    /* è§†é¢‘æ’­æ”¾ */
     .wx_ico_video {
         display:inline-block;
         position:absolute;
@@ -2710,7 +2710,7 @@ background:#ECECEC;
     }
     
     
-    /*新建、关闭和退出按钮*/
+    /*æ–°å»ºã€�å…³é—­å’Œé€€å‡ºæŒ‰é’®*/
     /*.chatPanel a.iconCreateNewChat { display: block; float:right; width:34px; height:34px; margin:6px 6px 0 0; background:url(../images/button_chat.png) 0px -528px no-repeat; text-indent:-9999px;}
     .chatPanel a.iconCreateNewChat:hover {background-position:-34px -528px;}
     .chatPanel a.iconCreateNewChat:active {background-position:-68px -528px;}*/
@@ -2723,7 +2723,7 @@ background:#ECECEC;
     .chatPanel .activeChatVernier { position:absolute;top:153px;width:34px; }
     .chatPanel .activeChatVernier img { background:url(../images/icon_chat.png) no-repeat -8px -40px;width:16px;height:16px; /*ie6 hack*/_margin-left:-20px;_margin-top:50px; }
     
-    /* 发起聊天等复杂面板 */
+    /* å�‘èµ·è�Šå¤©ç­‰å¤�æ�‚é�¢æ�¿ */
     .iconOperater {
         display: block;
         /*float: right;*/
@@ -2985,7 +2985,7 @@ background:#ECECEC;
     .chatPanel a.iconCloseChat:hover {background-position:-34px -462px;}
     .chatPanel a.iconCloseChat:active {background-position:-68px -462px;}
     
-    /* 新建会话 */
+    /* æ–°å»ºä¼šè¯� */
     .complexDialog { position: absolute;border-radius:8px;text-align:left;}
     .complexDialog .titleContainer { background:#50555c url(../images/bg_top.png);border-radius:4px 4px 0 0; }
     .complexDialog .title { border-top:1px solid rgba(255,255,255,0.16);border-bottom:1px solid rgba(0,0,0,0.3);height:45px;border-radius:4px 4px 0 0;text-align:left;padding:0 5px 0 10px;}
@@ -4909,7 +4909,7 @@ background:#ECECEC;
     word-wrap : break-word;
     resize : none;
     overflow : auto;
-    font:14px/1.5 Helvetica,"微软雅黑","黑体",Arial,Tahoma;
+    font:14px/1.5 Helvetica,"å¾®è½¯é›…é»‘","é»‘ä½“",Arial,Tahoma;
     line-height:1.2em;
 }
 

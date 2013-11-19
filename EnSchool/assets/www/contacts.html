@@ -51,31 +51,17 @@
             
             
         <div id="footer_nav" data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="b">
-                     <div style="padding: 5px 10px 5px 5px;height: 33px;">
-
-
-                    <div  style="float: left; width: 75%; padding:0;margin:0;" class="createNewChat">                                                      
-<div class="selectedPanel" style="display: block;" id="new_chat_group_selectedPanel">
-                        <a class="arrowLeft" href="javascript:;" style="border:1px solid green"><img src="./assets/icons/spacer1844c2.gif"></a>
-                        <a class="arrowRight" href="javascript:;" click="scrollRight" style="border:1px solid black"><img src="./assets/icons/spacer1844c2.gif"></a>
-                        <div class="selectedList" id="new_chat_group_selection">
-                            <div class="selectedListScroll" style=" left:0;border: 1px solid red;" id="new_chat_group_selectedListScroll">
-                            <span title="" id="new_contact_selected_template" class="selectedAvatar"> 
-                            <a class="iconRemove" href="javascript:;" click="unSelectContact"></a>
-                             <img src="./assets/icons/jerry.jpg" class="avatar"> </span>  
-                              
-
-
-
-                              </div>
-                        </div>
-
-                    </div>
-                    </div>
-                    <div  style="float:right;width: 15%;padding:0;margin: 0px;">
-                        <a class="chatSend" style="margin:0;padding:1px 0" href="javascript:onChatSend();"><b>OK</b></a>
-                    </div>
-                </div>
+        
+        
+               <div data-role="navbar" data-iconpos="top">
+                <ul >
+            <li class="footer_li"><a href="index.html" data-icon="new-chat-icon">Chats</a></li>
+            <li class="footer_li"><a href="javascript:toContacts();" data-icon="contacts">Contacts</a></li>
+            <li class="footer_li"><a href="javascript:toResource();" data-icon="compass" id="resource_index">Resources</a></li>
+            <li class="footer_li"><a href="profile.html" data-icon="self">Me</a></li>
+             </ul>
+             </div>
+                <!-- /navbar -->
             </div><!-- /footer -->
         </div><!-- /page -->
     </body>
