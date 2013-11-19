@@ -741,8 +741,8 @@ function onGetFeedsError(error) {
         destinationType: destinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100
+        targetWidth: 150,
+        targetHeight: 150
       });
     }
 
@@ -754,8 +754,8 @@ function onGetFeedsError(error) {
         destinationType: destinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.PHOTOLIBRARY, 
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100
+        targetWidth: 150,
+        targetHeight: 150
         });
     }
 
