@@ -563,8 +563,7 @@ function onGetFeedsSuccess(data) {
 
 	    var eleData;
 	    var contentData = data.records;
-    feeds = contentData;
-       for (var i = 0; i < contentData.length; i++) {
+      for (var i = 0; i < contentData.length; i++) {
         eleData = contentData[i];
 
         if (eleData.Body != null) {
@@ -572,9 +571,7 @@ function onGetFeedsSuccess(data) {
           console.log("eledata type " + eleData.type);
           
          var clone = forcetkClient.userId == eleData.InsertedById ? $("#chat_me").clone() : $("#chat_you_text").clone();
-         
-  
-          
+                 
           if (typeof  clone.find(".chatTime") != "undefined") {
               var strtime = eleData.CreatedDate;
               var timearr = strtime.split("T")[1].split(".")[0].split(":");   
@@ -583,11 +580,10 @@ function onGetFeedsSuccess(data) {
 
           clone.show();
           $("#contentChat").append(clone);
-        }
-       
-    }
+        } 
+      }
 
-    forcetkClient.ajax("/v28.0/chatter/feeds/groups/me/feed-items", imagePost, onGetFeedsError);
+    forcetkClient.ajax("/v28.0/chatter/feeds/groups/me/feed-items", imagePull, onGetFeedsError);
     
     
         $(".cloudText").click(function(){
@@ -615,7 +611,7 @@ $("#textinput").css("height", "10px");
 	
 }
 
-function imagePost(img){
+function imagePull(img){
     console.log("img=" + JSON.stringify(img));
     var items = img.items;
     var url;
