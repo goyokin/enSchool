@@ -395,7 +395,7 @@ function onGetTeacherUserSuccess(data) {
 
 function getFeeds(groupId) {
 	//forcetkClient.query("Select Id, Body from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
-	forcetkClient.query("Select Id, Body, ParentId, InsertedById, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH and ParentId = '" + groupId + "' ORDER BY CreatedDate ASC, Id DESC LIMIT 400", onGetFeedsSuccess, onGetFeedsError); 
+	forcetkClient.query("Select Id, Body, ContentData, ContentFileName, ParentId, InsertedById, CreatedDate, RelatedRecordId from FeedItem WHERE CreatedDate > LAST_MONTH and ParentId = '" + groupId + "' ORDER BY CreatedDate ASC, Id DESC LIMIT 400", onGetFeedsSuccess, onGetFeedsError); 
 	// forcetkClient.query("Select Id, Body, ParentId, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
 }
 
@@ -560,11 +560,16 @@ function getUserPhotoUrl(userId) {
     return users[0].SmallPhotoUrl;
 }
 function onGetFeedsSuccess(data) {
+
+alert("onGetFeedsSuccess");
+
+
 	    var eleData;
 	    var contentData = data.records;
     feeds = contentData;
        for (var i = 0; i < contentData.length; i++) {
         eleData = contentData[i];
+
         if (eleData.Body != null) {
           // Clone li element  
           console.log("eledata type " + eleData.type);
@@ -586,15 +591,17 @@ function onGetFeedsSuccess(data) {
             
                    if (eleData.ContentFileName != null) {
                    console.log(eleData.ContentData + "?oauth_token=" + forcetkClient.sessionId);
-          clone.find(".chatItemContent > .avatar").first().attr("src", "https://na15.salesforce.com"+ eleData.ContentData  + "?oauth_token=" + forcetkClient.sessionId);
+          clone.find(".chatItemContent > .avatar").first().attr("src", "https://na15.salesforce.com"+ "data:image/jpeg;base64," +eleData.ContentData  + "?oauth_token=" + forcetkClient.sessionId);
          }
              clone.find("pre").text(eleData.Body);
           clone.show();
           $("#contentChat").append(clone);
           console.log(clone);
         }
-        
+       
     }
+
+    forcetkClient.ajax("/v28.0/chatter/feeds/groups/me/feed-items", imagePost, onGetFeedsError);
     
     
         $(".cloudText").click(function(){
@@ -622,6 +629,30 @@ $("#textinput").css("height", "10px");
 	
 }
 
+function imagePost(img){
+    console.log("img=" + JSON.stringify(img));
+    var items = img.items;
+    var url;
+    for (var i = 0; i < items.length; i++) {
+       //console.log(items[i].downloadUrl);
+       //console.log("postimg=" + items[i].attachment.downloadUrl);
+       url = items[i].attachment.downloadUrl;
+    
+
+      if(url){
+        var clone =  $("#chat_me_photo").clone();
+        if (typeof  clone.find(".chatTime") != "undefined") {
+            clone.find(".chatTime").first().text("time later");
+        }
+
+        //clone.find("#smallImage").attr("src", "data:image/jpeg;base64,"+img);
+        clone.find("#smallImage").attr("src", forcetkClient.instanceUrl + url);
+        
+        clone.show();
+        $("#contentChat").append(clone);
+      }
+  }
+}
 
 function onGetFeedsError(error) {
     //cordova.require("salesforce/util/logger").logToConsole("onErrorSfdc: " + JSON.stringify(error));
