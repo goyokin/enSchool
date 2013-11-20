@@ -125,10 +125,7 @@ $.fn.showChatDetail = function(contentData) {
           // Clone li element  
           console.log("eledata type " + eleData.type);
           var clone = eleData.type == "me" ? $("#chat_me").clone() : $("#chat_you_text").clone();
-            alert(eleData.CreatedDate);
           if (typeof  clone.find("#chatTime") != "undefined") {
-          alert("find chat time");
-          alert(eleData.CreatedDate);
            clone.find("#chatTime").text(eleData.CreatedDate);
 	         clone.find("p").first().html(eleData.CreatedDate);
              clone.find(".chatTime").first().text(eleData.CreatedDate);
@@ -163,7 +160,6 @@ function onGetUserSuccess(data) {
 
 function onGetUserError(error) {
     //cordova.require("salesforce/util/logger").logToConsole("onErrorSfdc: " + JSON.stringify(error));
-    alert('GetUser Error: ' + JSON.stringify(error));
 }
 
 
@@ -373,12 +369,9 @@ var initNewChatGroup = function() {
     }
 }
 
-var onChatPhoto = function() {
-    alert("on chat photo select");
-    
+var onChatPhoto = function() {    
 }
 var onChatSend = function() {
-    alert("MESSAGE to SEND: " + $("#chatInputText").val());
       var clone =  $("#chat_me").clone();
           if (typeof  clone.find(".chatTime") != "undefined") {
               clone.find(".chatTime").first().text("time later");
@@ -437,7 +430,6 @@ function onGetMomentsFeedsSuccess(data) {
 	
 }
 function getFeedsAjax() {
-    alert("getFeedsAjax");
     forcetkClient.ajax("/v29.0/chatter/feeds/to/me", onGetFeedsSuccess, onGetFeedsError); 
 }
 
@@ -455,12 +447,10 @@ function getNewGroups() {
 }
 
 function getGroupsAjax() {
-	alert("getGroupsAjax");
 	forcetkClient.ajax('/v29.0/chatter/users/me/groups', onSuccess, onError); 
 }
 
 function postMessage(msg) {
-	alert("postMessage");
 	var fields = {};
     fields["ParentId"] = currentId;
 	//alert(forcetkClient.id);
@@ -470,14 +460,12 @@ function postMessage(msg) {
 }
 
 /*********************************
-  Qing: 
   Desciptions: Post image to backend
   Params: 
     image: a base64 string with JPG image content (Don't put "data:image/jpeg;base64," here!)
   Return: null
 */
 function postImage(image) {
-  alert("post image");
   postedImage = "data:image/jpeg;base64," + image;
 
   var fields = {};
@@ -490,7 +478,6 @@ function postImage(image) {
 
 
 /*********************************
-  Qing: 
   Desciptions: success callback
 */
 function onPostImageSuccess(data) {
@@ -510,21 +497,15 @@ function onPostImageSuccess(data) {
 
 
 function onPostMessageSuccess(data) {
-	alert(JSON.stringify(data));
 }
 function postMessageToGroup() {
-	alert("postMessageToGroup");
 	var fields = {};
-	alert("group id = " + forcetkClient.groupId);
     fields["ParentId"] = forcetkClient.groupId;
-	//alert(forcetkClient.id);
-	//fields["ParentId"] = forcetkClient.getId();
     fields["body"] = "posted to group on " + new Date();
     forcetkClient.create("FeedItem", fields, onSuccess, onError); 
 }
 
 function onSuccessGroup(response) {
-	alert('Success: ' + JSON.stringify(response));
 	groups = response.records;
 	
 	$(this).showChatList(response);
@@ -535,26 +516,20 @@ function onSuccessGroup(response) {
          currentGroupId = record.Id;
      });
 	 forcetkClient.setGroupId(currentGroupId);
-	 alert("groupid: " + forcetkClient.groupId);
 	 postMessageToGroup();
 }
 
-function onSuccess(data) {
-	alert('Success: ' + JSON.stringify(data));
-	
+function onSuccess(data) {	
 }
 
 
 function onError(error) {
     //cordova.require("salesforce/util/logger").logToConsole("onErrorSfdc: " + JSON.stringify(error));
-    alert('Error: ' + JSON.stringify(error));
 }
 
 
 function getUserPhotoUrl_orig(userId) {
-    //alert(userId);
     for (var i = 0; i < users.length; i++) {
-        //alert(users[i]);
         if (users[i] == userId) {
             return users[i+1].SmallPhotoUrl;
         }
@@ -587,10 +562,6 @@ function getUserPhotoUrl(userId) {
     return users[0].SmallPhotoUrl;
 }
 function onGetFeedsSuccess(data) {
-
-alert("onGetFeedsSuccess");
-
-
 	    var eleData;
 	    var contentData = data.records;
     feeds = contentData;
@@ -615,13 +586,7 @@ alert("onGetFeedsSuccess");
           var photoUrl = getUserPhotoUrl(eleData.InsertedById) + "?oauth_token=" + forcetkClient.sessionId;
          
             clone.find(".chatItemContent > .avatar").first().attr("src", photoUrl);
-            /*
-                   if (eleData.ContentFileName != null) {
-                   console.log(eleData.ContentData + "?oauth_token=" + forcetkClient.sessionId);
-          clone.find(".chatItemContent > .avatar").first().attr("src", "https://na15.salesforce.com"+ "data:image/jpeg;base64," +eleData.ContentData  + "?oauth_token=" + forcetkClient.sessionId);
-         }
-         */
-             clone.find("pre").text(eleData.Body);
+            clone.find("pre").text(eleData.Body);
           clone.show();
           $("#contentChat").append(clone);
           console.log(clone);
@@ -638,7 +603,7 @@ alert("onGetFeedsSuccess");
             var target = $(this);
             var dialog = $("#chatForwardDialog");
             dialog.positionOn(target);
-$("#textinput").css("height", "10px");
+        $("#textinput").css("height", "10px");
             dialog.show(); 
             
             });
@@ -662,11 +627,7 @@ function imagePost(img){
     var items = img.items;
     var url;
     for (var i = 0; i < items.length; i++) {
-       //console.log(items[i].downloadUrl);
-       //console.log("postimg=" + items[i].attachment.downloadUrl);
        url = items[i].attachment.downloadUrl;
-    
-
       if(url){
         var clone =  $("#chat_me_photo_new").clone();
         if (typeof  clone.find(".chatTime") != "undefined") {
@@ -685,7 +646,6 @@ function imagePost(img){
 
 function onGetFeedsError(error) {
     //cordova.require("salesforce/util/logger").logToConsole("onErrorSfdc: " + JSON.stringify(error));
-    alert('GetFeedError: ' + JSON.stringify(error));
 }
 
 
@@ -743,7 +703,6 @@ function onGetFeedsError(error) {
         forcetkClient.setUserAgentString(credsData.userAgent);
         forcetkClient.setUserId(credsData.userId);
         currentUserId = credsData.userId;
-        //alert("forcetkClient userid: " + forcetkClient.userId);
     }
 
     function getAuthCredentialsError(error) {
@@ -791,7 +750,7 @@ function onGetFeedsError(error) {
     // Called if something bad happens.
     //
     function onFail(message) {
-      //alert('Failed because: ' + message);
+      alert('Failed because: ' + message);
     }
 
 
@@ -847,14 +806,12 @@ function onContactsSuccess(data) {
 }
 
 function onContactsError(data) {
-	alert("contacts return error " + JSON.stringify(data));
 }
 function getUsersList(onSuccess, onError) {
 	forcetkClient.query("SELECT Id, Name, SmallPhotoUrl FROM User", onSuccess, onError); 
 }
 
 function toMoments() {
-	alert(forcetkClient);
 	window.location='moments.html';
 }  
 
