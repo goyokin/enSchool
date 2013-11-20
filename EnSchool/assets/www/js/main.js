@@ -360,7 +360,8 @@ var onChatSend = function() {
               clone.find(".chatTime").first().text("time later");
           }
           clone.find("pre").text($("#chatInputText").val());
-          clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
+          clone.find(".chatItemContent > .avatar").first().attr("src",getUserPhotoUrl(forcetkClient.userId) + "?oauth_token=" + forcetkClient.sessionId);
+          clone.show();
           $("#contentChat").append(clone);
           postMessage($("#chatInputText").val());
           
@@ -470,7 +471,8 @@ function onPostImageSuccess(data) {
       clone.find(".chatTime").first().text("time later");
   }
   //alert(clone.find("#smallImage").attr("src"));
-  clone.find("#smallImage").attr("src", postedImage);
+  clone.find("#chat_me_photo_img").attr("src", postedImage);
+  clone.find("#chant_me_photo_avatar").attr("src", getUserPhotoUrl(forcetkClient.userId) + "?oauth_token=" + forcetkClient.sessionId );
 
        clone.show();
             $("#contentChat").append(clone);
@@ -557,10 +559,6 @@ function getUserPhotoUrl(userId) {
     return users[0].SmallPhotoUrl;
 }
 function onGetFeedsSuccess(data) {
-
-//alert("onGetFeedsSuccess");
-
-
 	    var eleData;
 	    var contentData = data.records;
       for (var i = 0; i < contentData.length; i++) {
@@ -577,7 +575,8 @@ function onGetFeedsSuccess(data) {
               var timearr = strtime.split("T")[1].split(".")[0].split(":");   
               clone.find(".chatTime").first().text(timearr[0]+":"+timearr[1]);
           }
-
+		   clone.find("#chatItem_text").text(eleData.Body);
+		   clone.find("#avatar_img_url").attr("src", getUserPhotoUrl(eleData.InsertedById)  + "?oauth_token=" + forcetkClient.sessionId);
           clone.show();
           $("#contentChat").append(clone);
         } 
@@ -629,6 +628,7 @@ function imagePull(img){
 
         //clone.find("#smallImage").attr("src", "data:image/jpeg;base64,"+img);
         clone.find("#smallImage").attr("src", forcetkClient.instanceUrl + url);
+        clone.find("#avatar_img_url").attr("src", getUserPhotoUrl(eleData.InsertedById)  + "?oauth_token=" + forcetkClient.sessionId);
         
         clone.show();
         $("#contentChat").append(clone);

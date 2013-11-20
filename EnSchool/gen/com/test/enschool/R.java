@@ -152,11 +152,7 @@ public final class R {
         public static final int sf__login=0x7f0a0001;
     }
     public static final class string {
-        public static final int account_type=0x7f05002d;
-        public static final int androidPushNotificationClientId=0x7f050002;
-        /**  Default API version used by the SDK and sample apps 
-         */
-        public static final int api_version=0x7f050030;
+        public static final int account_type=0x7f05002c;
         /** 
       These aren't prefixed as they're expected to be overriden   
       Strings of the SDK that are used by SDK-based applications live in sf__strings.xml
@@ -165,67 +161,66 @@ public final class R {
       These aren't prefixed as they're expected to be overriden   
     
          */
-        public static final int app_name=0x7f05002c;
-        public static final int app_package=0x7f05002e;
-        public static final int hello=0x7f050031;
+        public static final int app_name=0x7f05002b;
+        public static final int hello=0x7f05002e;
         public static final int oauthRedirectURI=0x7f050001;
         /**  If you're only supporting recent versions of Android (e.g. 3.x and up), you can override this to be touch and get a better looking login UI  
          */
-        public static final int oauth_display_type=0x7f05002f;
+        public static final int oauth_display_type=0x7f05002d;
         public static final int remoteAccessConsumerKey=0x7f050000;
-        public static final int sf__access_token_revoked=0x7f050007;
-        public static final int sf__auth_login_production=0x7f050013;
-        public static final int sf__auth_login_sandbox=0x7f050014;
-        public static final int sf__clear_cookies=0x7f050010;
-        public static final int sf__custom_url_button=0x7f050015;
-        public static final int sf__generic_authentication_error=0x7f050004;
+        public static final int sf__access_token_revoked=0x7f050006;
+        public static final int sf__auth_login_production=0x7f050012;
+        public static final int sf__auth_login_sandbox=0x7f050013;
+        public static final int sf__clear_cookies=0x7f05000f;
+        public static final int sf__custom_url_button=0x7f050014;
+        public static final int sf__generic_authentication_error=0x7f050003;
         /**  Errors 
          */
-        public static final int sf__generic_authentication_error_title=0x7f050003;
-        public static final int sf__generic_error=0x7f050005;
-        public static final int sf__invalid_server_url=0x7f050006;
+        public static final int sf__generic_authentication_error_title=0x7f050002;
+        public static final int sf__generic_error=0x7f050004;
+        public static final int sf__invalid_server_url=0x7f050005;
         /**  Login 
          */
-        public static final int sf__login_title=0x7f05000e;
+        public static final int sf__login_title=0x7f05000d;
         /**  Manage space activity 
          */
-        public static final int sf__manage_space_confirmation=0x7f05002b;
-        public static final int sf__passcode_confirm_instructions=0x7f050020;
-        public static final int sf__passcode_confirm_title=0x7f05001f;
-        public static final int sf__passcode_create_instructions=0x7f05001e;
+        public static final int sf__manage_space_confirmation=0x7f05002a;
+        public static final int sf__passcode_confirm_instructions=0x7f05001f;
+        public static final int sf__passcode_confirm_title=0x7f05001e;
+        public static final int sf__passcode_create_instructions=0x7f05001d;
         /**  Passcode entry screen 
          */
-        public static final int sf__passcode_create_title=0x7f05001d;
-        public static final int sf__passcode_enter_instructions=0x7f050022;
-        public static final int sf__passcode_enter_title=0x7f050021;
-        public static final int sf__passcode_final=0x7f050025;
-        public static final int sf__passcode_forgot_string=0x7f050027;
-        public static final int sf__passcode_logout_confirmation=0x7f050028;
-        public static final int sf__passcode_logout_no=0x7f05002a;
-        public static final int sf__passcode_logout_yes=0x7f050029;
-        public static final int sf__passcode_min_length=0x7f050026;
-        public static final int sf__passcode_try_again=0x7f050024;
-        public static final int sf__passcodes_dont_match=0x7f050023;
-        public static final int sf__pick_server=0x7f05000f;
-        public static final int sf__reload=0x7f050011;
+        public static final int sf__passcode_create_title=0x7f05001c;
+        public static final int sf__passcode_enter_instructions=0x7f050021;
+        public static final int sf__passcode_enter_title=0x7f050020;
+        public static final int sf__passcode_final=0x7f050024;
+        public static final int sf__passcode_forgot_string=0x7f050026;
+        public static final int sf__passcode_logout_confirmation=0x7f050027;
+        public static final int sf__passcode_logout_no=0x7f050029;
+        public static final int sf__passcode_logout_yes=0x7f050028;
+        public static final int sf__passcode_min_length=0x7f050025;
+        public static final int sf__passcode_try_again=0x7f050023;
+        public static final int sf__passcodes_dont_match=0x7f050022;
+        public static final int sf__pick_server=0x7f05000e;
+        public static final int sf__reload=0x7f050010;
         /**  Server picker 
          */
-        public static final int sf__server_picker_title=0x7f050012;
-        public static final int sf__server_url_add_title=0x7f050017;
-        public static final int sf__server_url_default_apply=0x7f05001b;
-        public static final int sf__server_url_default_cancel=0x7f05001a;
-        public static final int sf__server_url_default_custom_label=0x7f050018;
-        public static final int sf__server_url_default_custom_url=0x7f050019;
-        public static final int sf__server_url_edit_title=0x7f050016;
-        public static final int sf__server_url_reset=0x7f05001c;
+        public static final int sf__server_picker_title=0x7f050011;
+        public static final int sf__server_url_add_title=0x7f050016;
+        public static final int sf__server_url_default_apply=0x7f05001a;
+        public static final int sf__server_url_default_cancel=0x7f050019;
+        public static final int sf__server_url_default_custom_label=0x7f050017;
+        public static final int sf__server_url_default_custom_url=0x7f050018;
+        public static final int sf__server_url_edit_title=0x7f050015;
+        public static final int sf__server_url_reset=0x7f05001b;
         /**  SSL Errors 
          */
-        public static final int sf__ssl_error=0x7f050008;
-        public static final int sf__ssl_expired=0x7f050009;
-        public static final int sf__ssl_id_mismatch=0x7f05000a;
-        public static final int sf__ssl_not_yet_valid=0x7f05000b;
-        public static final int sf__ssl_unknown_error=0x7f05000d;
-        public static final int sf__ssl_untrusted=0x7f05000c;
+        public static final int sf__ssl_error=0x7f050007;
+        public static final int sf__ssl_expired=0x7f050008;
+        public static final int sf__ssl_id_mismatch=0x7f050009;
+        public static final int sf__ssl_not_yet_valid=0x7f05000a;
+        public static final int sf__ssl_unknown_error=0x7f05000c;
+        public static final int sf__ssl_untrusted=0x7f05000b;
     }
     public static final class style {
         public static final int SalesforceSDK=0x7f090000;
