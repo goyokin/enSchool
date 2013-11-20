@@ -28,7 +28,7 @@ package com.test.enschool;
 
 import android.app.Application;
 
-import com.salesforce.androidsdk.smartstore.app.SalesforceSDKManagerWithSmartStore;
+import com.salesforce.androidsdk.app.SalesforceSDKManager;
 
 /**
  * Application class for the contact explorer app.
@@ -38,6 +38,6 @@ public class EnSchoolApp extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		SalesforceSDKManagerWithSmartStore.initHybrid(getApplicationContext(), new KeyImpl());
+		SalesforceSDKManager.initHybrid(getApplicationContext(), new KeyImpl());
 	}
 }

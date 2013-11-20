@@ -158,9 +158,6 @@ public final class R {
       These aren't prefixed as they're expected to be overriden   
       Strings of the SDK that are used by SDK-based applications live in sf__strings.xml
     
-
-      These aren't prefixed as they're expected to be overriden   
-    
          */
         public static final int app_name=0x7f05002b;
         public static final int hello=0x7f05002e;
