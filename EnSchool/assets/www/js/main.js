@@ -356,9 +356,23 @@ var onChatPhoto = function() {
 var onChatSend = function() {
     //alert("MESSAGE to SEND: " + $("#chatInputText").val());
       var clone =  $("#chat_me").clone();
-          if (typeof  clone.find(".chatTime") != "undefined") {
-              clone.find(".chatTime").first().text("time later");
+ 
+		var d=new Date();
+		var minutes=d.getMinutes();
+		var hours=d.getHours();
+		
+		if (minutes < 10) {
+			minutes = '0'+minutes;
+		}
+		if (hours < 10) {
+			hours = '0' + hours;
+		}
+      
+          if (typeof  clone.find(".chatTime") != "undefined" ) {
+
+              clone.find(".chatTime").first().text(hours + ":" + minutes);
           }
+          
           clone.find("pre").text($("#chatInputText").val());
           clone.find(".chatItemContent > .avatar").first().attr("src",getUserPhotoUrl(forcetkClient.userId) + "?oauth_token=" + forcetkClient.sessionId);
           clone.show();
@@ -450,7 +464,7 @@ function postMessage(msg) {
   Return: null
 */
 function postImage(image) {
-  //alert("post image");
+  alert("post image");
   postedImage = "data:image/jpeg;base64," + image;
 
   var fields = {};
@@ -466,13 +480,14 @@ function postImage(image) {
   Desciptions: success callback
 */
 function onPostImageSuccess(data) {
+alert("postimagesucc");
   var clone =  $("#chat_me_photo").clone();
   if (typeof  clone.find(".chatTime") != "undefined") {
       clone.find(".chatTime").first().text("time later");
   }
   //alert(clone.find("#smallImage").attr("src"));
   clone.find("#chat_me_photo_img").attr("src", postedImage);
-  clone.find("#chant_me_photo_avatar").attr("src", getUserPhotoUrl(forcetkClient.userId) + "?oauth_token=" + forcetkClient.sessionId );
+  clone.find("#chat_me_photo_avatar").attr("src", getUserPhotoUrl(forcetkClient.userId) + "?oauth_token=" + forcetkClient.sessionId );
 
        clone.show();
             $("#contentChat").append(clone);
@@ -709,6 +724,7 @@ function onGetFeedsError(error) {
     //
 
     function onPhotoSuccess(data) {
+    alert('onphotosucc');
       postImage(data);
       return;
     }
@@ -722,16 +738,15 @@ function onGetFeedsError(error) {
         quality: 50,
         destinationType: destinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
-        encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 150,
-        targetHeight: 150
+        encodingType: Camera.EncodingType.JPEG
       });
     }
 
     // A button will call this function
     //
-    function getPhoto(source) {
-      // Retrieve image file location from specified source
+    function getPhoto() {
+    alert("getphoto");
+          // Retrieve image file location from specified source
       navigator.camera.getPicture(onPhotoSuccess, onFail, { quality: 50,
         destinationType: destinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.PHOTOLIBRARY, 
@@ -739,6 +754,18 @@ function onGetFeedsError(error) {
         targetWidth: 150,
         targetHeight: 150
         });
+    
+    /*
+      // Retrieve image file location from specified source
+      navigator.camera.getPicture(onPhotoSuccess, onFail, { quality: 50,
+        destinationType: destinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY, 
+        encodingType: Camera.EncodingType.JPEG,
+        
+        targetWidth: 100,
+        targetHeight: 100
+        });
+        */
     }
 
     // Called if something bad happens.
@@ -753,9 +780,10 @@ function onGetFeedsError(error) {
 
     }
     function onPhotoClick() {
-        getPhoto(pictureSource.PHOTOLIBRARY);
+    alert("onphotoclic");
+        getPhoto();
         $("#popupPanel").panel( "close" );
-        //getPhoto(pictureSource.SAVEDPHOTOALBUM);
+       // getPhoto(pictureSource.SAVEDPHOTOALBUM);
     }
     
  
