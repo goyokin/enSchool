@@ -184,7 +184,6 @@ $.fn.showChatDetail = function(contentData) {
 
 function onGetUserSuccess(data) {
 	users = data.records;
-	console.log('users' + users);
 	$(this).showChatList(data);
 	getNewGroups();
 	
@@ -326,8 +325,8 @@ var initChatList = function () {
     console.log("in the init");
 		document.addEventListener("deviceready", onDeviceReady,false);
     
-   // getUsers();
-    /* populate data
+    //getUsers();
+    /*// populate data
        $.ajax({
           url: "./php/chat_list.php",
         data: "",
@@ -411,28 +410,7 @@ var initNewChatGroup = function() {
 var onChatPhoto = function() {    
 }
 var onChatSend = function() {
-            var clone =  $("#chat_me").clone();
-          if (typeof  clone.find(".chatTime") != "undefined") {
-              clone.find(".chatTime").first().text("time later");
-          }
-          clone.find("pre").text($("#chatInputText").val());
-          //clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
-          clone.find("#chat_me_photo_avatar").attr("src", getUserPhotoUrl(forcetkClient.userId ) + "?oauth_token=" + forcetkClient.sessionId);
-          clone.show();
-          $("#contentChat").append(clone);
           postMessage($("#chatInputText").val());
-          
-           setTimeout(function(){
-        	   var clone =  $("#chat_you").clone();
-          if (typeof  clone.find(".chatTime") != "undefined") {
-              clone.find(".chatTime").first().text("time later");
-          }
-          clone.find("pre").text($("#chatInputText").val());
-          clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
-            
-          $("#contentChat").append(clone);
-            
-    }, 1000);    
 }
 
 function getUsers() {
@@ -663,7 +641,7 @@ function onGetFeedsSuccess(data) {
        
 	if (isMoments == 0) {
 		forcetkClient.ajax("/v29.0/chatter/feeds/groups/me/feed-items", imagePost, onGetFeedsError);
-		// setInterval(getFeeds(currentId)(), 5000); 
+		 setInterval(getFeeds(currentId)(), 5000); 
 	} else {
 		//forcetkClient.ajax("/v29.0/chatter/feeds/news/005i0000001lc4X/feed-items", imagePost, onGetFeedsError);
 		forcetkClient.ajax("/v29.0/chatter/feeds/user-profile/"+ users[0].Id + "/feed-items", imagePost, onGetFeedsError);
