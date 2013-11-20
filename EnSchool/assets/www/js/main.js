@@ -104,10 +104,7 @@ $.fn.showChatDetail = function(contentData) {
           // Clone li element  
           console.log("eledata type " + eleData.type);
           var clone = eleData.type == "me" ? $("#chat_me").clone() : $("#chat_you_text").clone();
-            alert(eleData.CreatedDate);
           if (typeof  clone.find("#chatTime") != "undefined") {
-          alert("find chat time");
-          alert(eleData.CreatedDate);
            clone.find("#chatTime").text(eleData.CreatedDate);
 	         clone.find("p").first().html(eleData.CreatedDate);
              clone.find(".chatTime").first().text(eleData.CreatedDate);
@@ -353,11 +350,11 @@ var initNewChatGroup = function() {
 }
 
 var onChatPhoto = function() {
-    alert("on chat photo select");
+    //alert("on chat photo select");
     
 }
 var onChatSend = function() {
-    alert("MESSAGE to SEND: " + $("#chatInputText").val());
+    //alert("MESSAGE to SEND: " + $("#chatInputText").val());
       var clone =  $("#chat_me").clone();
           if (typeof  clone.find(".chatTime") != "undefined") {
               clone.find(".chatTime").first().text("time later");
@@ -412,7 +409,7 @@ function onGetMomentsFeedsSuccess(data) {
 	
 }
 function getFeedsAjax() {
-    alert("getFeedsAjax");
+    //alert("getFeedsAjax");
     forcetkClient.ajax("/v29.0/chatter/feeds/to/me", onGetFeedsSuccess, onGetFeedsError); 
 }
 
@@ -430,12 +427,12 @@ function getNewGroups() {
 }
 
 function getGroupsAjax() {
-	alert("getGroupsAjax");
+	//alert("getGroupsAjax");
 	forcetkClient.ajax('/v29.0/chatter/users/me/groups', onSuccess, onError); 
 }
 
 function postMessage(msg) {
-	alert("postMessage");
+	//alert("postMessage");
 	var fields = {};
     fields["ParentId"] = currentId;
 	//alert(forcetkClient.id);
@@ -452,7 +449,7 @@ function postMessage(msg) {
   Return: null
 */
 function postImage(image) {
-  alert("post image");
+  //alert("post image");
   postedImage = "data:image/jpeg;base64," + image;
 
   var fields = {};
@@ -472,7 +469,7 @@ function onPostImageSuccess(data) {
   if (typeof  clone.find(".chatTime") != "undefined") {
       clone.find(".chatTime").first().text("time later");
   }
-  alert(clone.find("#smallImage").attr("src"));
+  //alert(clone.find("#smallImage").attr("src"));
   clone.find("#smallImage").attr("src", postedImage);
 
        clone.show();
@@ -483,12 +480,12 @@ function onPostImageSuccess(data) {
 
 
 function onPostMessageSuccess(data) {
-	alert(JSON.stringify(data));
+	//alert(JSON.stringify(data));
 }
 function postMessageToGroup() {
-	alert("postMessageToGroup");
+	//alert("postMessageToGroup");
 	var fields = {};
-	alert("group id = " + forcetkClient.groupId);
+	//alert("group id = " + forcetkClient.groupId);
     fields["ParentId"] = forcetkClient.groupId;
 	//alert(forcetkClient.id);
 	//fields["ParentId"] = forcetkClient.getId();
@@ -497,7 +494,7 @@ function postMessageToGroup() {
 }
 
 function onSuccessGroup(response) {
-	alert('Success: ' + JSON.stringify(response));
+	//alert('Success: ' + JSON.stringify(response));
 	groups = response.records;
 	
 	$(this).showChatList(response);
@@ -508,19 +505,19 @@ function onSuccessGroup(response) {
          currentGroupId = record.Id;
      });
 	 forcetkClient.setGroupId(currentGroupId);
-	 alert("groupid: " + forcetkClient.groupId);
+	 //alert("groupid: " + forcetkClient.groupId);
 	 postMessageToGroup();
 }
 
 function onSuccess(data) {
-	alert('Success: ' + JSON.stringify(data));
+	//alert('Success: ' + JSON.stringify(data));
 	
 }
 
 
 function onError(error) {
     //cordova.require("salesforce/util/logger").logToConsole("onErrorSfdc: " + JSON.stringify(error));
-    alert('Error: ' + JSON.stringify(error));
+    //alert('Error: ' + JSON.stringify(error));
 }
 
 
@@ -561,13 +558,12 @@ function getUserPhotoUrl(userId) {
 }
 function onGetFeedsSuccess(data) {
 
-alert("onGetFeedsSuccess");
+//alert("onGetFeedsSuccess");
 
 
 	    var eleData;
 	    var contentData = data.records;
-    feeds = contentData;
-       for (var i = 0; i < contentData.length; i++) {
+      for (var i = 0; i < contentData.length; i++) {
         eleData = contentData[i];
 
         if (eleData.Body != null) {
@@ -575,33 +571,19 @@ alert("onGetFeedsSuccess");
           console.log("eledata type " + eleData.type);
           
          var clone = forcetkClient.userId == eleData.InsertedById ? $("#chat_me").clone() : $("#chat_you_text").clone();
-         
-  
-          
+                 
           if (typeof  clone.find(".chatTime") != "undefined") {
               var strtime = eleData.CreatedDate;
-              var timearr = strtime.split("T")[1].split(".")[0].split(":");
-              
+              var timearr = strtime.split("T")[1].split(".")[0].split(":");   
               clone.find(".chatTime").first().text(timearr[0]+":"+timearr[1]);
           }
-         
-          var photoUrl = getUserPhotoUrl(eleData.InsertedById) + "?oauth_token=" + forcetkClient.sessionId;
-         
-            clone.find(".chatItemContent > .avatar").first().attr("src", photoUrl);
-            
-                   if (eleData.ContentFileName != null) {
-                   console.log(eleData.ContentData + "?oauth_token=" + forcetkClient.sessionId);
-          clone.find(".chatItemContent > .avatar").first().attr("src", "https://na15.salesforce.com"+ "data:image/jpeg;base64," +eleData.ContentData  + "?oauth_token=" + forcetkClient.sessionId);
-         }
-             clone.find("pre").text(eleData.Body);
+
           clone.show();
           $("#contentChat").append(clone);
-          console.log(clone);
-        }
-       
-    }
+        } 
+      }
 
-    forcetkClient.ajax("/v28.0/chatter/feeds/groups/me/feed-items", imagePost, onGetFeedsError);
+    forcetkClient.ajax("/v28.0/chatter/feeds/groups/me/feed-items", imagePull, onGetFeedsError);
     
     
         $(".cloudText").click(function(){
@@ -629,7 +611,7 @@ $("#textinput").css("height", "10px");
 	
 }
 
-function imagePost(img){
+function imagePull(img){
     console.log("img=" + JSON.stringify(img));
     var items = img.items;
     var url;
@@ -741,8 +723,8 @@ function onGetFeedsError(error) {
         destinationType: destinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100
+        targetWidth: 150,
+        targetHeight: 150
       });
     }
 
@@ -754,8 +736,8 @@ function onGetFeedsError(error) {
         destinationType: destinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.PHOTOLIBRARY, 
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100
+        targetWidth: 150,
+        targetHeight: 150
         });
     }
 
@@ -825,7 +807,7 @@ function getUsersList(onSuccess, onError) {
 }
 
 function toMoments() {
-	alert(forcetkClient);
+	//alert(forcetkClient);
 	window.location='moments.html';
 }  
 
