@@ -886,6 +886,7 @@ function onContactsSuccess(data) {
 		var clone = $("#friendDetailLi").clone();
 		clone.find("#avatar").attr("src", eleData.SmallPhotoUrl + "?oauth_token=" + forcetkClient.sessionId);
 		clone.find("#nickName").text(eleData.Name);
+		clone.show();
 		$("#contacts_ul").append(clone);
 	}
 	$("#contacts_ul").listview("refresh");

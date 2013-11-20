@@ -137,7 +137,7 @@ a:link,a:visited { color:white; text-decoration:none; }
 a:hover, a:active { color:white; text-decoration:underline; }
     
 .ui_contacts > .ui-li-divider {
-	padding-top:0;
+	
     padding-bottom:0;
 }
 
@@ -168,4 +168,21 @@ vertical-align: middle;
 width: 28px;
 height: 28px;
 background: url(../assets/icons/groupaccount.png);
+}
+
+#group {
+    width: 28px;
+    height: 28px;
+   background: url(../assets/icons/groupaccount.png);  
+   margin-right:5px;
+   margin-top:6px; 
+}
+
+#compose {
+
+width: 28px;
+height: 28px;
+   margin-right:5px;
+   margin-top:6px; 
+background: url(../assets/icons/mm_title_btn_compose_normal.png);
 }
