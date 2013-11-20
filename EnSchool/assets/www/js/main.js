@@ -384,7 +384,9 @@ var onChatSend = function() {
               clone.find(".chatTime").first().text("time later");
           }
           clone.find("pre").text($("#chatInputText").val());
-          clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
+          //clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
+          clone.find("#chat_me_photo_avatar").attr("src", getUserPhotoUrl(forcetkClient.userId ) + "?oauth_token=" + forcetkClient.sessionId);
+          clone.show();
           $("#contentChat").append(clone);
           postMessage($("#chatInputText").val());
           
@@ -395,6 +397,7 @@ var onChatSend = function() {
           }
           clone.find("pre").text($("#chatInputText").val());
           clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
+            
           $("#contentChat").append(clone);
             
     }, 1000);    
