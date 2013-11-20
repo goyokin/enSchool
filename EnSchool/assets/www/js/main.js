@@ -1,10 +1,3 @@
-var avartars = {
-    jerry: "jerry.jpg",
-    huyou: "huyou.jpg",
-    hannah: "hannahca.jpg",
-    m1: "1m.jpg" 
-};
-
 var listDesc = [
 	"Yes, will do",
 	"Yeah",
@@ -36,6 +29,7 @@ var listGroupTime = [
 ];
 
 var isGroup = 0;
+var feeds = [];
 
 function getHours() {
 	var d=new Date();
@@ -409,29 +403,7 @@ var initNewChatGroup = function() {
 var onChatPhoto = function() {    
 }
 var onChatSend = function() {
-      var clone =  $("#chat_me").clone();
-          if (typeof  clone.find(".chatTime") != "undefined") {
-              clone.find(".chatTime").first().text("time later");
-          }
-          clone.find("pre").text($("#chatInputText").val());
-          //clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
-          clone.find("#chat_me_photo_avatar").attr("src", getUserPhotoUrl(forcetkClient.userId ) + "?oauth_token=" + forcetkClient.sessionId);
-          clone.show();
-          $("#contentChat").append(clone);
           postMessage($("#chatInputText").val());
-          
-           setTimeout(function(){
-        	   var clone =  $("#chat_you").clone();
-          if (typeof  clone.find(".chatTime") != "undefined") {
-              clone.find(".chatTime").first().text("time later");
-          }
-          clone.find("pre").text($("#chatInputText").val());
-          clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
-            
-          $("#contentChat").append(clone);
-            
-    }, 1000);    
-    
 }
 
 function getUsers() {
@@ -583,7 +555,6 @@ function getUserPhotoUrl_orig(userId) {
 }
 
 function getUserPhotoUrl(userId) {
-    //alert(userId);
     for (var i = 0; i < users.length; i++) {
         //alert(users[i]);
         if (users[i].Id == userId) {
@@ -602,61 +573,44 @@ function getUserPhotoUrl(userId) {
 
 var isMoments = 0;
 function onGetFeedsSuccess(data) {
+
 	    var eleData;
 	    var contentData = data.records;
-    	var teacherUrl ;
-       for (var i = 0; i < contentData.length; i++) {
-        eleData = contentData[i];
-
-        if (eleData.Body != null) {
-          // Clone li element  
-          console.log("eledata type " + eleData.type);
-          
-         var clone = forcetkClient.userId == eleData.InsertedById ? $("#chat_me").clone() : $("#chat_you_text").clone();
-         
-  
-          
-          if (typeof  clone.find(".chatTime") != "undefined") {
-              var strtime = eleData.CreatedDate;
-              var timearr = strtime.split("T")[1].split(".")[0].split(":");
-              
-              clone.find(".chatTime").first().text(timearr[0]+":"+timearr[1]);
-          }
-         
-          var photoUrl = getUserPhotoUrl(eleData.InsertedById) + "?oauth_token=" + forcetkClient.sessionId;
-          teacherUrl = photoUrl;
-         
-            clone.find(".chatItemContent > .avatar").first().attr("src", photoUrl);
-            clone.find("pre").text(eleData.Body);
-          clone.show();
-          $("#contentChat").append(clone);
-          console.log(clone);
-        }
-        
-    }
-
-	if (isMoments) {
-      //hardcode image
-       var clone =$("#chat_you_photo_new").clone();
-       clone.find(".chatTime").first().text("10:34");
-        clone.find("#chat_you_photo_avatar").attr("src", teacherUrl);
-      
-        clone.find("#chat_photo_img").attr("src", "./assets/icons/tennis_150.jpg");
-         clone.show();
-          $("#contentChat").append(clone);
-          
-             //hardcode image
-       var clone =$("#chat_you_photo_new").clone();
-       clone.find(".chatTime").first().text("11:34");
-        clone.find("#chat_you_photo_avatar").attr("src", teacherUrl);
-      
-        clone.find("#chat_photo_img").attr("src", "./assets/icons/project_150.jpg");
-         clone.show();
-          $("#contentChat").append(clone);
-
-	}
-          
-          
+	    var newFeeds = contentData;
+	    
+	    if (newFeeds.length > feeds.length) { //There is new feed coming during polling
+	    	var teacherUrl ;
+	       for (var i = feeds.length; i < contentData.length; i++) {
+	        	eleData = contentData[i];
+	
+	        	if (eleData.Body != null) {
+	         		 // Clone li element  
+	         		 console.log("eledata type " + eleData.type);
+	          
+	        		 var clone = forcetkClient.userId == eleData.InsertedById ? $("#chat_me").clone() : $("#chat_you_text").clone();
+	         
+	  
+	          
+	         		 if (typeof  clone.find(".chatTime") != "undefined") {
+	            		  var strtime = eleData.CreatedDate;
+	             		 var timearr = strtime.split("T")[1].split(".")[0].split(":");
+	              
+	          			  clone.find(".chatTime").first().text(timearr[0]+":"+timearr[1]);
+	         		 }
+	         
+	         		 var photoUrl = getUserPhotoUrl(eleData.InsertedById) + "?oauth_token=" + forcetkClient.sessionId;
+	         		 teacherUrl = photoUrl;
+	         
+	          		  clone.find(".chatItemContent > .avatar").first().attr("src", photoUrl);
+	          		  clone.find("pre").text(eleData.Body);
+	         		  clone.show();
+	         		 $("#contentChat").append(clone);
+	        	}
+	    	}
+	    	feeds = newFeeds;
+	    
+	    } 
+       
 	if (isMoments == 0) {
 		forcetkClient.ajax("/v29.0/chatter/feeds/groups/me/feed-items", imagePost, onGetFeedsError);
 	} else {
@@ -664,7 +618,7 @@ function onGetFeedsSuccess(data) {
 		forcetkClient.ajax("/v29.0/chatter/feeds/user-profile/"+ users[0].Id + "/feed-items", imagePost, onGetFeedsError);
 	}
     
-        
+                   setTimeout(getFeeds(currentId)(), 5000); 
     
         $(".cloudText").click(function(){
                 console.log("click"); 
