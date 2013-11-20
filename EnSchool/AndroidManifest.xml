@@ -27,7 +27,7 @@
 
     <application android:label="@string/app_name" 
         android:name=".EnSchoolApp"
-        android:manageSpaceActivity="com.salesforce.androidsdk.ui.ManageSpaceActivity">
+        android:manageSpaceActivity="com.salesforce.androidsdk.ui.ManageSpaceActivity" android:icon="@drawable/ic_launcher">
 
 		<!-- Service required for authentication -->
 		<service android:exported="true"
