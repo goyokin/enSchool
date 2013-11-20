@@ -662,7 +662,8 @@ function onGetFeedsSuccess(data) {
 	if (isMoments == 0) {
 		forcetkClient.ajax("/v28.0/chatter/feeds/groups/me/feed-items", imagePost, onGetFeedsError);
 	} else {
-		forcetkClient.ajax("/v28.0/chatter/feeds/news/005i0000001lc4X/feed-items", imagePost, onGetFeedsError);
+		//forcetkClient.ajax("/v28.0/chatter/feeds/news/005i0000001lc4X/feed-items", imagePost, onGetFeedsError);
+		forcetkClient.ajax("/v28.0/chatter/feeds/user-profile/"+ users[0].Id + "/feed-items", imagePost, onGetFeedsError);
 	}
     
         
@@ -701,13 +702,13 @@ function imagePost(img){
     for (var i = 0; i < items.length; i++) {
        url = items[i].attachment.downloadUrl;
       if(url){
-        var clone =  $("#chat_me_photo_new").clone();
+        var clone =  $("#chat_you_photo_new").clone();
         if (typeof  clone.find(".chatTime") != "undefined") {
             clone.find(".chatTime").first().text("10:52");
         }
 
         //clone.find("#smallImage").attr("src", "data:image/jpeg;base64,"+img);
-        clone.find("#chat_me_photo_avatar").attr("src", getUserPhotoUrl(forcetkClient.userId ) + "?oauth_token=" + forcetkClient.sessionId);
+        clone.find("#chat_you_photo_avatar").attr("src", getUserPhotoUrl(users[0].Id ) + "?oauth_token=" + forcetkClient.sessionId);
         clone.find("#chat_photo_img").attr("src", forcetkClient.instanceUrl + url);
         
         clone.show();
