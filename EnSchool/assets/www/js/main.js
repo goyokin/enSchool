@@ -701,19 +701,34 @@ function imagePost(img){
     var url;
     for (var i = 0; i < items.length; i++) {
        url = items[i].attachment.downloadUrl;
-      if(url){
-        var clone =  $("#chat_you_photo_new").clone();
-        if (typeof  clone.find(".chatTime") != "undefined") {
+     
+		var clone;
+		if (isMoments) {
+		 if(url){
+       	 clone =  $("#chat_you_photo_new").clone();
+       		 if (typeof  clone.find(".chatTime") != "undefined") {
             clone.find(".chatTime").first().text("10:52");
+       		 }
+      	 //clone.find("#smallImage").attr("src", "data:image/jpeg;base64,"+img);
+      	 clone.find("#chat_you_photo_avatar").attr("src", getUserPhotoUrl(users[0].Id ) + "?oauth_token=" + forcetkClient.sessionId);
+       	 clone.find("#chat_photo_img").attr("src", forcetkClient.instanceUrl + url);
         }
-
-        //clone.find("#smallImage").attr("src", "data:image/jpeg;base64,"+img);
-        clone.find("#chat_you_photo_avatar").attr("src", getUserPhotoUrl(users[0].Id ) + "?oauth_token=" + forcetkClient.sessionId);
-        clone.find("#chat_photo_img").attr("src", forcetkClient.instanceUrl + url);
+ 		} else {
+ 		 if(url){
+     		   clone =  $("#chat_me_photo_new").clone();
+      	  if (typeof  clone.find(".chatTime") != "undefined") {
+            clone.find(".chatTime").first().text("10:52");
+      	  }
+     	  //clone.find("#smallImage").attr("src", "data:image/jpeg;base64,"+img);
+     	   clone.find("#chat_me_photo_avatar").attr("src", getUserPhotoUrl(forcetkClient.userId ) + "?oauth_token=" + forcetkClient.sessionId);
+     	   clone.find("#chat_photo_img").attr("src", forcetkClient.instanceUrl + url);
+      	  }
+  
+ 		}
         
         clone.show();
         $("#contentChat").append(clone);
-      }
+      
   }
 }
 
