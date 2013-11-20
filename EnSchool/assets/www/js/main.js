@@ -5,6 +5,38 @@ var avartars = {
     m1: "1m.jpg" 
 };
 
+var listDesc = [
+	"Yes, will do",
+	"Yeah",
+	"Tennis tomorrow?",
+	"My boy sick, have go home",
+	"Remember the tour this thursday",
+	"Have you done your test?",
+	"Davis: Nuts sale ends this Sunday.",
+	"John: practice this sat. 10am"
+];
+
+var listTime = [
+	"17:02",
+	"21:39",
+	"20:47",
+	"17:08",
+	"14:30",
+	"4:28",
+	"8:20",
+];
+
+var listGroupDesc = [
+	"Davis: Nuts sale ends this Sunday.",
+	"John: practice this sat. 10am"
+];
+var listGroupTime = [
+	"4:28",
+	"8:20"
+];
+
+var isGroup = 0;
+
 function getHours() {
 	var d=new Date();
 	var hours=d.getHours();
@@ -168,7 +200,6 @@ $.fn.showChatList = function(data) {
     
     var eleData;
     
-    
     for (var i = 0; i < contentData.length; i++) {
         eleData = contentData[i];
           // Clone li element         
@@ -179,10 +210,16 @@ $.fn.showChatList = function(data) {
        
         clone.find(":header").html(eleData.Name);
 
-        /*
-        clone.find("p").last().html(eleData.desc);
-        clone.find("p").first().html(eleData.time);
-        */
+        if (isGroup == 0) {
+       	 clone.find("p").last().html(listDesc[i]);
+        	clone.find("#list_time").text(listTime[i]);
+        } else {
+        
+               clone.find("p").last().html(listGroupDesc[i]);
+        	clone.find("#list_time").text(listGroupTime[i]);
+        	
+        }
+        
         clone.find("img").attr("src", eleData.SmallPhotoUrl + "?oauth_token=" + forcetkClient.sessionId);
         /*
         if (eleData.unread > 0) {
@@ -199,6 +236,7 @@ $.fn.showChatList = function(data) {
           $("#contentList > li").click(function(){
 	          currentId = $(this).find(".li_id").attr("id");
 	          getFeeds($(this).find(".li_id").attr("id"));
+	          
           });
   
   	
@@ -412,6 +450,7 @@ function onGetTeacherUserSuccess(data) {
 }
 
 function getFeeds(groupId) {
+	isMoments = 0;
 	//forcetkClient.query("Select Id, Body from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
 	forcetkClient.query("Select Id, Body, ContentData, ContentFileName, ParentId, InsertedById, CreatedDate, RelatedRecordId from FeedItem WHERE CreatedDate > LAST_MONTH and ParentId = '" + groupId + "' ORDER BY CreatedDate ASC, Id DESC LIMIT 400", onGetFeedsSuccess, onGetFeedsError); 
 	// forcetkClient.query("Select Id, Body, ParentId, CreatedDate from FeedItem WHERE CreatedDate > LAST_MONTH ORDER BY CreatedDate DESC, Id DESC LIMIT 20", onGetFeedsSuccess, onGetFeedsError); 
@@ -422,7 +461,6 @@ function getMomentsFeeds() {
 	//alert(users[0].Id);
 	
 }
-
 
 
 function onGetMomentsFeedsSuccess(data) {
@@ -440,7 +478,7 @@ function getGroups() {
 }
 
 function getNewGroups() {
-   
+   isGroup = 1;
     //forcetkClient.query("SELECT CollaborationGroupId from CollaborationGroupMember where Memberid = " + forcetkClient.userId, onSuccess, onError); 
     //forcetkClient.query("SELECT Id, Name, SmallPhotoUrl from CollaborationGroup where Name = 'Class 123'", onSuccessGroup, onError); 
     forcetkClient.query("SELECT Id, Name, SmallPhotoUrl from CollaborationGroup where Name LIKE '%group'", onSuccessGroup, onError);
@@ -506,8 +544,9 @@ function postMessageToGroup() {
 }
 
 function onSuccessGroup(response) {
-	groups = response.records;
 	
+	groups = response.records;
+	isGroup = 1;
 	$(this).showChatList(response);
 	
 	return;
@@ -561,10 +600,13 @@ function getUserPhotoUrl(userId) {
     }
     return users[0].SmallPhotoUrl;
 }
+
+var isMoments = 0;
 function onGetFeedsSuccess(data) {
 	    var eleData;
 	    var contentData = data.records;
-    feeds = contentData;
+    	feeds = contentData;
+    	var teacherUrl ;
        for (var i = 0; i < contentData.length; i++) {
         eleData = contentData[i];
 
@@ -584,6 +626,7 @@ function onGetFeedsSuccess(data) {
           }
          
           var photoUrl = getUserPhotoUrl(eleData.InsertedById) + "?oauth_token=" + forcetkClient.sessionId;
+          teacherUrl = photoUrl;
          
             clone.find(".chatItemContent > .avatar").first().attr("src", photoUrl);
             clone.find("pre").text(eleData.Body);
@@ -591,10 +634,37 @@ function onGetFeedsSuccess(data) {
           $("#contentChat").append(clone);
           console.log(clone);
         }
-       
+        
     }
 
-    forcetkClient.ajax("/v28.0/chatter/feeds/groups/me/feed-items", imagePost, onGetFeedsError);
+	if (isMoments) {
+      //hardcode image
+       var clone =$("#chat_you_photo_new").clone();
+       clone.find(".chatTime").first().text("10:34");
+        clone.find("#chat_you_photo_avatar").attr("src", teacherUrl);
+      
+        clone.find("#chat_photo_img").attr("src", "./assets/icons/tennis_150.jpg");
+         clone.show();
+          $("#contentChat").append(clone);
+          
+             //hardcode image
+       var clone =$("#chat_you_photo_new").clone();
+       clone.find(".chatTime").first().text("11:34");
+        clone.find("#chat_you_photo_avatar").attr("src", teacherUrl);
+      
+        clone.find("#chat_photo_img").attr("src", "./assets/icons/project_150.jpg");
+         clone.show();
+          $("#contentChat").append(clone);
+
+	}
+          
+          
+	if (isMoments == 0) {
+		forcetkClient.ajax("/v28.0/chatter/feeds/groups/me/feed-items", imagePost, onGetFeedsError);
+	} else {
+		forcetkClient.ajax("/v28.0/chatter/feeds/news/005i0000001lc4X/feed-items", imagePost, onGetFeedsError);
+	}
+    
         
     
         $(".cloudText").click(function(){
@@ -622,6 +692,8 @@ function onGetFeedsSuccess(data) {
 	
 }
 
+
+
 function imagePost(img){
     console.log("img=" + JSON.stringify(img));
     var items = img.items;
@@ -631,7 +703,7 @@ function imagePost(img){
       if(url){
         var clone =  $("#chat_me_photo_new").clone();
         if (typeof  clone.find(".chatTime") != "undefined") {
-            clone.find(".chatTime").first().text("yesterday");
+            clone.find(".chatTime").first().text("10:52");
         }
 
         //clone.find("#smallImage").attr("src", "data:image/jpeg;base64,"+img);
@@ -779,7 +851,7 @@ function initMoments() {
 
     //register to receive notifications when autoRefreshOnForeground refreshes the sfdc session
     document.addEventListener("salesforceSessionRefresh",salesforceSessionRefreshed,false);
-
+	isMoments = 1;
 	getMomentsFeeds();
 }
 

@@ -28,8 +28,9 @@
         <div data-role="page" id="chat_detail">
         
             <div id="header_nav" data-role="header"  data-position="inline" data-theme="a">
-                <h1 class="ui-title" role="heading" id="nav_title">Chats</h1>
-                <a href="index.html" data-icon="gear" class="ui-btn-right">Setting</a>
+                            <a data-icon="back" class="ui-btn-left" href="new_chat_group.html" data-transition="slideup">Back</a>
+                <h1 class="ui-title" role="heading" id="nav_title">Scout Group</h1>
+                <a href="index.html" data-icon="group" class="ui-btn-right" >&nbsp;</a>
             </div>
             <!-- /header -->
 
@@ -84,7 +85,7 @@
                    
                    
                    <!-- for photo -->
-                   <div class="chatItem me">  
+                   <div class="chatItem me" style="display:none">  
                     <div class="time"> <span class="timeBg left"></span> 22:29 <span class="timeBg right"></span> </div>    
                     <div class="chatItemContent"> <img class="avatar" src="./assets/icons/hannahca.jpg"   title="" click="showProfile" username="wxid_lsf0x9atpogz12"> 
                     <div class="cloud cloudImg" > <div class="cloudPannel" style=""> <div class="sendStatus">   </div> 
@@ -119,6 +120,7 @@
                                                   <pre style="white-space:pre-wrap">
 <img style="display:block;width:60px;height:60px;" classs="smallImage" src="./assets/icons/jerry.jpg" />
             </pre>  </div>  </div> <div class="cloudArrow "></div>  </div>  </div>  </div>   </div>
+
 
 
 
@@ -166,9 +168,37 @@
                  
             <div id="footer_nav" data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="b" style="margin:0;padding:0">
              
+               
                  
                 <div style="padding: 5px 10px 5px 5px;height: 33px;">
 
+
+                    <div  style="float: left; width: 70%; padding:0;margin:0;">    
+                    <div style="float:left;width:20px;">
+                    <img src="./assets/icons/micro.png" style="width:28px;height:28px;padding-top:5px;margin-left:-5px;" onclick="javascript:alert('todo');"/>
+                    </div>
+                        <div style="float:left;margin-left:3px;">                                                  
+                        <textarea id="chatInputText" rows="1" style="line-height: 25px; height:28px;resize:none;padding:0;margin:0;"></textarea>     
+                        </div>
+                    </div>
+                    <div  style="float:right;width: 15%;padding:0;margin: 0px;">
+                    <div style="width:100%">
+                    <div style="float:right;width:75%;" >
+                    <a class="chatSend" style="margin:0;padding:1px 0" href="javascript:onChatSend();"><b>Send</b></a>
+                    </div>
+                    <div style="float:left;width:15%;">
+                      
+<a class="chatSend" style="margin:0;padding:1px 0;width:40px;margin-right:20px;"  data-rel="popup" data-transition="slide" data-position-to="window"  href="#popupPanel"><b>+</b></a>                    
+
+                    </div>
+                    
+                    </div>
+                        
+                    </div>
+                </div>
+                
+                <!--  
+                <div style="padding: 5px 10px 5px 5px;height: 33px;">
 
                     <div  style="float: left; width: 70%; padding:0;margin:0;">                                                      
                         <textarea id="chatInputText" rows="1" style="line-height: 25px; height:28px;resize:none;padding:0;margin:0;"></textarea>     
@@ -188,7 +218,7 @@
                     </div>
                         
                     </div>
-                </div>
+                </div> -->
             </div><!-- /footer -->
             
         </div><!-- /page -->

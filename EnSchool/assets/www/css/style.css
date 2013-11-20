@@ -140,3 +140,32 @@ a:hover, a:active { color:white; text-decoration:underline; }
 	padding-top:0;
     padding-bottom:0;
 }
+
+
+
+.ui-icon-micro {
+vertical-align: middle;
+width: 28px;
+height: 28px;
+background: url(../assets/icons/micro.png);
+}
+
+.ui-icon-camera {
+vertical-align: middle;
+width: 30px;
+height: 23px;
+background: url(../assets/icons/avatarcamera_white.png);
+}
+
+.ui-icon-compose {
+vertical-align: middle;
+width: 28px;
+height: 28px;
+background: url(../assets/icons/mm_title_btn_compose_normal.png);
+}
+.ui-icon-group {
+vertical-align: middle;
+width: 28px;
+height: 28px;
+background: url(../assets/icons/groupaccount.png);
+}

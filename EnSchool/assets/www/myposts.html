@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <meta name="description" content="Enschool"/>
+
+        <title>Enschool</title>
+  
+  <link rel="stylesheet" href="jquery/jquery.mobile-1.3.1.min.css" />
+    <script src="jquery/jquery-2.0.0.min.js"></script>
+    <script src="jquery/jquery.mobile-1.3.1.min.js"></script>
+        
+        
+
+    <!-- Include cordova. -->
+	<script src="cordova-2.3.0.js"></script>
+
+    <!-- Include cordova plugins -->
+    <script src="cordova.force.js"></script>
+
+    <!-- include forcetk.mobilesdk for REST transaction support -->
+    <script src="forcetk.mobilesdk.js"></script>
+        <script type="text/javascript" src="./js/main.js"></script>
+        
+    <link rel="stylesheet" href="./css/chatter.css" />   
+    <link rel="stylesheet" href="./css/style.css" />
+     
+   
+</head>
+	
+
+    <body>
+        <div data-role="page" id="moments">
+            <div id="header_nav" data-role="header"  data-position="inline" data-theme="a">
+            	<a data-icon="back" class="ui-btn-left" href="new_chat_group.html" data-transition="slideup">Back</a>
+                <h1 class="ui-title" role="heading" id="nav_title">Moments</h1>
+                <a data-icon="camera" class="ui-btn-right" href="new_chat_group.html" data-transition="slideup" data-corner="false">&nbsp;</a>
+            </div>
+            <!-- /header -->
+
+            <!--<div data-role="content"  >-->
+            <div data-role="content" id="contentChat">        
+               <div class="chatItem you" id="chat_me_photo" style="display:none">  
+                    <div class="time"> <span class="timeBg left"></span> <span id="chatTime">10:00</span> <span class="timeBg right"></span> </div>  
+                    <div class="chatItemContent"> 
+                <img class="avatar" src="./assets/icons/jerry.jpg" title="KW" click="showProfile" username="F100000347971931"> 
+                <div class="cloud cloudText" un="cloud_2030211748" msgid="2030211748"> 
+                <div class="cloudPannel" style=""> 
+                    <div class="sendStatus">   </div>
+                 <div class="cloudBody"> 
+                    <div class="cloudContent">  
+                                                  <pre style="white-space:pre-wrap">
+<img style="display:block;width:60px;height:60px;" id="smallImage" id="chat_me_photo" src="./assets/icons/jerry.jpg" />
+            </pre>  </div>  </div> <div class="cloudArrow "></div>  </div>  </div>  </div>   </div>
+
+         <!-- for photo me -->
+                   <div class="chatItem me" id="chat_me_photo_new" style="display:none">  
+                    <div class="time"> <span class="timeBg left"></span> <span class="chatTime">22:29</span> <span class="timeBg right"></span> </div>    
+                    <div class="chatItemContent"> <img class="avatar" id="chat_me_photo_avatar" src="./assets/icons/hannahca.jpg"   title="" click="showProfile" username="wxid_lsf0x9atpogz12"> 
+                    <div class="cloud cloudImg" > <div class="cloudPannel" style=""> <div class="sendStatus">   </div> 
+                    <div class="cloudBody"> <div class="cloudContent">  <!--img msg-->      
+                    <img id="chat_photo_img" class="zoomIn imageBorder" src="./assets/icons/nutsalereceipt.jpg" click="popImg" rawsrc="./assets/icons/nutsalereceipt.jpg" >
+                      </div>  </div> <div class="cloudArrow "></div>  </div>  </div>  </div>   </div>
+                
+   <!-- for photo you -->
+			<div class="chatItem you" id="chat_you_photo_new" style="display:none">   
+			 <div class="chatItemContent"> 
+			 <img class="avatar" id="chat_you_photo_avatar" src=""  username="wxid_esbucxzvekt712"> 
+			 <div class="cloud cloudImg" > <div class="cloudPannel" style=""> 
+			 <div class="sendStatus">   
+			 </div> <div class="cloudBody"> <div class="cloudContent">  <!--img msg-->     
+			  <img id="chat_photo_img" class="zoomIn imageBorder" src="" click="popImg" rawsrc="" >                                 
+			         </div>  </div> <div class="cloudArrow "></div>  </div>  </div>  </div>   </div>
+
+
+
+                <div class="chatItem you" id="chat_you_text" style="display:none">  
+                    <div class="time"> <span class="timeBg left"></span> <span class="chatTime">10:00</span> <span class="timeBg right"></span> </div>  
+                    <div class="chatItemContent"> 
+                <img class="avatar" src="./assets/icons/jerry.jpg" title="KW" click="showProfile" username="F100000347971931"> 
+                <div class="cloud cloudText" un="cloud_2030211748" msgid="2030211748"> 
+                <div class="cloudPannel" style=""> <div class="sendStatus">   </div>
+                 <div class="cloudBody"> 
+                    <div class="cloudContent">  
+                                                  <pre style="white-space:pre-wrap">you_text
+            </pre>  </div>  </div> <div class="cloudArrow "></div>  </div>  </div>  </div>   </div>
+
+                <div data-role="controlgroup" data-type="horizontal" style="display:none" id="chatForwardDialog">
+                    <a href="index.html" data-role="button" data-theme="a">Copy</a>
+                    <a href="index.html" data-role="button" data-theme="a">Forward</a>
+                    <a href="index.html" data-role="button" data-theme="a">Favorite</a>
+                    <a href="index.html" data-role="button" data-theme="a">Delete</a>
+                </div>
+                <div id="triangle" style="display:none" class="triangle">
+                       
+                </div>
+               
+              </div><!--/content-primary -->    
+              
+            <div id="footer_nav" data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="a" style="margin:0;padding:0">
+               <div data-role="navbar" data-iconpos="top">
+                               <ul >
+            <li class="footer_li"><a href="index.html" data-icon="new-chat-icon">Chats</a></li>
+            <li class="footer_li"><a href="contacts.html" data-icon="contacts">Contacts</a></li>
+            <li class="footer_li"><a href="javascript:toResource();" data-icon="compass" id="resource_index">Resources</a></li>
+            <li class="footer_li"><a href="profile.html" data-icon="self">Me</a></li>
+             </ul>
+                <!-- /navbar -->
+            </div><!-- /footer -->
+        </div><!-- /page -->
+    </body>
+</html>
