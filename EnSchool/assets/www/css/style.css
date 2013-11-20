@@ -179,10 +179,17 @@ background: url(../assets/icons/groupaccount.png);
 }
 
 #compose {
-
 width: 28px;
 height: 28px;
    margin-right:5px;
    margin-top:6px; 
 background: url(../assets/icons/mm_title_btn_compose_normal.png);
+}
+
+#camera {
+width: 38px;
+height: 28px;
+   margin-right:5px;
+   margin-top:6px; 
+background: url(../assets/icons/camera_38x28.png);
 }

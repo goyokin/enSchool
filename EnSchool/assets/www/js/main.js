@@ -611,14 +611,36 @@ function onGetFeedsSuccess(data) {
 	    
 	    } 
        
+       	if (isMoments) {
+      //hardcode image
+       var clone =$("#chat_you_photo_new").clone();
+       clone.find(".chatTime").first().text("10:34");
+        clone.find("#chat_you_photo_avatar").attr("src", teacherUrl);
+      
+        clone.find("#chat_photo_img").attr("src", "./assets/icons/tennis_150.jpg");
+         clone.show();
+          $("#contentChat").append(clone);
+          
+             //hardcode image
+       var clone =$("#chat_you_photo_new").clone();
+       clone.find(".chatTime").first().text("11:34");
+        clone.find("#chat_you_photo_avatar").attr("src", teacherUrl);
+      
+        clone.find("#chat_photo_img").attr("src", "./assets/icons/project_150.jpg");
+         clone.show();
+          $("#contentChat").append(clone);
+
+	}
+       
 	if (isMoments == 0) {
 		forcetkClient.ajax("/v29.0/chatter/feeds/groups/me/feed-items", imagePost, onGetFeedsError);
+		 setTimeout(getFeeds(currentId)(), 5000); 
 	} else {
 		//forcetkClient.ajax("/v29.0/chatter/feeds/news/005i0000001lc4X/feed-items", imagePost, onGetFeedsError);
 		forcetkClient.ajax("/v29.0/chatter/feeds/user-profile/"+ users[0].Id + "/feed-items", imagePost, onGetFeedsError);
 	}
     
-                   setTimeout(getFeeds(currentId)(), 5000); 
+                  
     
         $(".cloudText").click(function(){
                 console.log("click"); 
