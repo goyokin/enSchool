@@ -660,10 +660,10 @@ function onGetFeedsSuccess(data) {
           
           
 	if (isMoments == 0) {
-		forcetkClient.ajax("/v28.0/chatter/feeds/groups/me/feed-items", imagePost, onGetFeedsError);
+		forcetkClient.ajax("/v29.0/chatter/feeds/groups/me/feed-items", imagePost, onGetFeedsError);
 	} else {
-		//forcetkClient.ajax("/v28.0/chatter/feeds/news/005i0000001lc4X/feed-items", imagePost, onGetFeedsError);
-		forcetkClient.ajax("/v28.0/chatter/feeds/user-profile/"+ users[0].Id + "/feed-items", imagePost, onGetFeedsError);
+		//forcetkClient.ajax("/v29.0/chatter/feeds/news/005i0000001lc4X/feed-items", imagePost, onGetFeedsError);
+		forcetkClient.ajax("/v29.0/chatter/feeds/user-profile/"+ users[0].Id + "/feed-items", imagePost, onGetFeedsError);
 	}
     
         
@@ -738,7 +738,7 @@ function onGetFeedsError(error) {
 
 
 
-    var apiVersion = "v28.0";
+    var apiVersion = "v29.0";
     var forcetkClient;
     var debugMode = true;
     var currentUserId;
