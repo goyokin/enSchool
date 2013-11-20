@@ -5,6 +5,27 @@ var avartars = {
     m1: "1m.jpg" 
 };
 
+function getHours() {
+	var d=new Date();
+	var hours=d.getHours();
+	
+	if (hours < 10) {
+		hours = '0' + hours;
+	}
+	return hours;
+}
+function getMinutes() {
+	var d=new Date();
+	var minutes=d.getMinutes();
+	
+	if (minutes < 10) {
+		minutes = '0'+minutes;
+	}
+	return minutes;
+}
+
+
+
 var contact_data = [];
 var individual = [];
 var group = [];
@@ -104,7 +125,10 @@ $.fn.showChatDetail = function(contentData) {
           // Clone li element  
           console.log("eledata type " + eleData.type);
           var clone = eleData.type == "me" ? $("#chat_me").clone() : $("#chat_you_text").clone();
+            alert(eleData.CreatedDate);
           if (typeof  clone.find("#chatTime") != "undefined") {
+          alert("find chat time");
+          alert(eleData.CreatedDate);
            clone.find("#chatTime").text(eleData.CreatedDate);
 	         clone.find("p").first().html(eleData.CreatedDate);
              clone.find(".chatTime").first().text(eleData.CreatedDate);
@@ -350,32 +374,17 @@ var initNewChatGroup = function() {
 }
 
 var onChatPhoto = function() {
-    //alert("on chat photo select");
+    alert("on chat photo select");
     
 }
 var onChatSend = function() {
-    //alert("MESSAGE to SEND: " + $("#chatInputText").val());
+    alert("MESSAGE to SEND: " + $("#chatInputText").val());
       var clone =  $("#chat_me").clone();
- 
-		var d=new Date();
-		var minutes=d.getMinutes();
-		var hours=d.getHours();
-		
-		if (minutes < 10) {
-			minutes = '0'+minutes;
-		}
-		if (hours < 10) {
-			hours = '0' + hours;
-		}
-      
-          if (typeof  clone.find(".chatTime") != "undefined" ) {
-
-              clone.find(".chatTime").first().text(hours + ":" + minutes);
+          if (typeof  clone.find(".chatTime") != "undefined") {
+              clone.find(".chatTime").first().text("time later");
           }
-          
           clone.find("pre").text($("#chatInputText").val());
-          clone.find(".chatItemContent > .avatar").first().attr("src",getUserPhotoUrl(forcetkClient.userId) + "?oauth_token=" + forcetkClient.sessionId);
-          clone.show();
+          clone.find(".chatItemContent > .avatar").first().attr("src", "./assets/icons/jerry.jpg");
           $("#contentChat").append(clone);
           postMessage($("#chatInputText").val());
           
@@ -397,10 +406,11 @@ function getUsers() {
 }
 
 function getTeacherUser() {
-	forcetkClient.query("SELECT Id, Name, SmallPhotoUrl FROM User where Name = 'Teacher'", onGetTeacherUserSuccess, onGetUserError); 
+	forcetkClient.query("SELECT Id, Name, SmallPhotoUrl FROM User where Name LIKE 'Mr%'", onGetTeacherUserSuccess, onGetUserError); 
 }
 
 function onGetTeacherUserSuccess(data) {
+
 	users = data.records;
 	forcetkClient.query("Select Id, Body, ParentId, InsertedById, CreatedDate, ContentData, ContentFileName from FeedItem WHERE CreatedDate > LAST_MONTH and InsertedById = '" + users[0].Id + "' ORDER BY CreatedDate DESC, Id DESC", onGetMomentsFeedsSuccess, onGetFeedsError);
 }
@@ -424,7 +434,7 @@ function onGetMomentsFeedsSuccess(data) {
 	
 }
 function getFeedsAjax() {
-    //alert("getFeedsAjax");
+    alert("getFeedsAjax");
     forcetkClient.ajax("/v29.0/chatter/feeds/to/me", onGetFeedsSuccess, onGetFeedsError); 
 }
 
@@ -442,12 +452,12 @@ function getNewGroups() {
 }
 
 function getGroupsAjax() {
-	//alert("getGroupsAjax");
+	alert("getGroupsAjax");
 	forcetkClient.ajax('/v29.0/chatter/users/me/groups', onSuccess, onError); 
 }
 
 function postMessage(msg) {
-	//alert("postMessage");
+	alert("postMessage");
 	var fields = {};
     fields["ParentId"] = currentId;
 	//alert(forcetkClient.id);
@@ -475,19 +485,19 @@ function postImage(image) {
   forcetkClient.create("FeedItem", fields, onPostImageSuccess, onError); 
 }
 
+
 /*********************************
   Qing: 
   Desciptions: success callback
 */
 function onPostImageSuccess(data) {
-alert("postimagesucc");
-  var clone =  $("#chat_me_photo").clone();
+  var clone =  $("#chat_me_photo_new").clone();
   if (typeof  clone.find(".chatTime") != "undefined") {
-      clone.find(".chatTime").first().text("time later");
+      clone.find(".chatTime").first().text(getHours()+":"+getMinutes());
   }
-  //alert(clone.find("#smallImage").attr("src"));
-  clone.find("#chat_me_photo_img").attr("src", postedImage);
-  clone.find("#chat_me_photo_avatar").attr("src", getUserPhotoUrl(forcetkClient.userId) + "?oauth_token=" + forcetkClient.sessionId );
+  
+  clone.find("#chat_photo_img").attr("src", postedImage);
+  clone.find("#chat_me_photo_avatar").attr("src", getUserPhotoUrl(forcetkClient.userId ) + "?oauth_token=" + forcetkClient.sessionId);
 
        clone.show();
             $("#contentChat").append(clone);
@@ -497,12 +507,12 @@ alert("postimagesucc");
 
 
 function onPostMessageSuccess(data) {
-	//alert(JSON.stringify(data));
+	alert(JSON.stringify(data));
 }
 function postMessageToGroup() {
-	//alert("postMessageToGroup");
+	alert("postMessageToGroup");
 	var fields = {};
-	//alert("group id = " + forcetkClient.groupId);
+	alert("group id = " + forcetkClient.groupId);
     fields["ParentId"] = forcetkClient.groupId;
 	//alert(forcetkClient.id);
 	//fields["ParentId"] = forcetkClient.getId();
@@ -511,7 +521,7 @@ function postMessageToGroup() {
 }
 
 function onSuccessGroup(response) {
-	//alert('Success: ' + JSON.stringify(response));
+	alert('Success: ' + JSON.stringify(response));
 	groups = response.records;
 	
 	$(this).showChatList(response);
@@ -522,19 +532,19 @@ function onSuccessGroup(response) {
          currentGroupId = record.Id;
      });
 	 forcetkClient.setGroupId(currentGroupId);
-	 //alert("groupid: " + forcetkClient.groupId);
+	 alert("groupid: " + forcetkClient.groupId);
 	 postMessageToGroup();
 }
 
 function onSuccess(data) {
-	//alert('Success: ' + JSON.stringify(data));
+	alert('Success: ' + JSON.stringify(data));
 	
 }
 
 
 function onError(error) {
     //cordova.require("salesforce/util/logger").logToConsole("onErrorSfdc: " + JSON.stringify(error));
-    //alert('Error: ' + JSON.stringify(error));
+    alert('Error: ' + JSON.stringify(error));
 }
 
 
@@ -574,9 +584,14 @@ function getUserPhotoUrl(userId) {
     return users[0].SmallPhotoUrl;
 }
 function onGetFeedsSuccess(data) {
+
+alert("onGetFeedsSuccess");
+
+
 	    var eleData;
 	    var contentData = data.records;
-      for (var i = 0; i < contentData.length; i++) {
+    feeds = contentData;
+       for (var i = 0; i < contentData.length; i++) {
         eleData = contentData[i];
 
         if (eleData.Body != null) {
@@ -584,21 +599,35 @@ function onGetFeedsSuccess(data) {
           console.log("eledata type " + eleData.type);
           
          var clone = forcetkClient.userId == eleData.InsertedById ? $("#chat_me").clone() : $("#chat_you_text").clone();
-                 
+         
+  
+          
           if (typeof  clone.find(".chatTime") != "undefined") {
               var strtime = eleData.CreatedDate;
-              var timearr = strtime.split("T")[1].split(".")[0].split(":");   
+              var timearr = strtime.split("T")[1].split(".")[0].split(":");
+              
               clone.find(".chatTime").first().text(timearr[0]+":"+timearr[1]);
           }
-		   clone.find("#chatItem_text").text(eleData.Body);
-		   clone.find("#avatar_img_url").attr("src", getUserPhotoUrl(eleData.InsertedById)  + "?oauth_token=" + forcetkClient.sessionId);
+         
+          var photoUrl = getUserPhotoUrl(eleData.InsertedById) + "?oauth_token=" + forcetkClient.sessionId;
+         
+            clone.find(".chatItemContent > .avatar").first().attr("src", photoUrl);
+            /*
+                   if (eleData.ContentFileName != null) {
+                   console.log(eleData.ContentData + "?oauth_token=" + forcetkClient.sessionId);
+          clone.find(".chatItemContent > .avatar").first().attr("src", "https://na15.salesforce.com"+ "data:image/jpeg;base64," +eleData.ContentData  + "?oauth_token=" + forcetkClient.sessionId);
+         }
+         */
+             clone.find("pre").text(eleData.Body);
           clone.show();
           $("#contentChat").append(clone);
-        } 
-      }
+          console.log(clone);
+        }
+       
+    }
 
-    forcetkClient.ajax("/v28.0/chatter/feeds/groups/me/feed-items", imagePull, onGetFeedsError);
-    
+    forcetkClient.ajax("/v28.0/chatter/feeds/groups/me/feed-items", imagePost, onGetFeedsError);
+        
     
         $(".cloudText").click(function(){
                 console.log("click"); 
@@ -625,7 +654,7 @@ $("#textinput").css("height", "10px");
 	
 }
 
-function imagePull(img){
+function imagePost(img){
     console.log("img=" + JSON.stringify(img));
     var items = img.items;
     var url;
@@ -636,14 +665,14 @@ function imagePull(img){
     
 
       if(url){
-        var clone =  $("#chat_me_photo").clone();
+        var clone =  $("#chat_me_photo_new").clone();
         if (typeof  clone.find(".chatTime") != "undefined") {
-            clone.find(".chatTime").first().text("time later");
+            clone.find(".chatTime").first().text("yesterday");
         }
 
         //clone.find("#smallImage").attr("src", "data:image/jpeg;base64,"+img);
-        clone.find("#smallImage").attr("src", forcetkClient.instanceUrl + url);
-        clone.find("#avatar_img_url").attr("src", getUserPhotoUrl(eleData.InsertedById)  + "?oauth_token=" + forcetkClient.sessionId);
+        clone.find("#chat_me_photo_avatar").attr("src", getUserPhotoUrl(forcetkClient.userId ) + "?oauth_token=" + forcetkClient.sessionId);
+        clone.find("#chat_photo_img").attr("src", forcetkClient.instanceUrl + url);
         
         clone.show();
         $("#contentChat").append(clone);
@@ -724,7 +753,6 @@ function onGetFeedsError(error) {
     //
 
     function onPhotoSuccess(data) {
-    alert('onphotosucc');
       postImage(data);
       return;
     }
@@ -738,34 +766,23 @@ function onGetFeedsError(error) {
         quality: 50,
         destinationType: destinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
-        encodingType: Camera.EncodingType.JPEG
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 100,
+        targetHeight: 100
       });
     }
 
     // A button will call this function
     //
-    function getPhoto() {
-    alert("getphoto");
-          // Retrieve image file location from specified source
-      navigator.camera.getPicture(onPhotoSuccess, onFail, { quality: 50,
-        destinationType: destinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.PHOTOLIBRARY, 
-        encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 150,
-        targetHeight: 150
-        });
-    
-    /*
+    function getPhoto(source) {
       // Retrieve image file location from specified source
       navigator.camera.getPicture(onPhotoSuccess, onFail, { quality: 50,
         destinationType: destinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.PHOTOLIBRARY, 
         encodingType: Camera.EncodingType.JPEG,
-        
         targetWidth: 100,
         targetHeight: 100
         });
-        */
     }
 
     // Called if something bad happens.
@@ -780,10 +797,9 @@ function onGetFeedsError(error) {
 
     }
     function onPhotoClick() {
-    alert("onphotoclic");
-        getPhoto();
+        getPhoto(pictureSource.PHOTOLIBRARY);
         $("#popupPanel").panel( "close" );
-       // getPhoto(pictureSource.SAVEDPHOTOALBUM);
+        //getPhoto(pictureSource.SAVEDPHOTOALBUM);
     }
     
  
@@ -835,7 +851,7 @@ function getUsersList(onSuccess, onError) {
 }
 
 function toMoments() {
-	//alert(forcetkClient);
+	alert(forcetkClient);
 	window.location='moments.html';
 }  
 
