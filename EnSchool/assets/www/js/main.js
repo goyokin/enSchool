@@ -64,7 +64,6 @@ var group = [];
 
 var users = [];
 var groups = [];
-var feeds = [];
 var currentId;
  
 var pictureSource;   // picture source
@@ -605,7 +604,6 @@ var isMoments = 0;
 function onGetFeedsSuccess(data) {
 	    var eleData;
 	    var contentData = data.records;
-    	feeds = contentData;
     	var teacherUrl ;
        for (var i = 0; i < contentData.length; i++) {
         eleData = contentData[i];
@@ -824,7 +822,7 @@ function onGetFeedsError(error) {
 
     // A button will call this function
     //
-    function getPhoto(source) {
+    function getPhoto() {
       // Retrieve image file location from specified source
       navigator.camera.getPicture(onPhotoSuccess, onFail, { quality: 50,
         destinationType: destinationType.DATA_URL,
@@ -847,7 +845,7 @@ function onGetFeedsError(error) {
 
     }
     function onPhotoClick() {
-        getPhoto(pictureSource.PHOTOLIBRARY);
+        getPhoto();
         $("#popupPanel").panel( "close" );
         //getPhoto(pictureSource.SAVEDPHOTOALBUM);
     }
