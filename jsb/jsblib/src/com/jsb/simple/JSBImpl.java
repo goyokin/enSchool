@@ -195,39 +195,39 @@ public class JSBImpl extends Activity implements IJSB {
 			
 			if (i >= numMethods) {
 				try {
-					// func(String json, String param, String onSuccess, String onError, String onProgress)
+					// func(JSONObject param, String onSuccess, String onError, String onProgress)
 					func = mClass.getMethod(method, JSONObject.class, String.class,
-										String.class, String.class, String.class);
+											String.class, String.class);
 				} catch (Exception e) {
 					Tracer.e(TAG, "method not found" + mClass.getName() + ":" + method, e);
 					return;
 				}
 			}
 			
-			String param = null;
+			JSONObject param = null;
 			try {
-				param = jsonObj.getString(KEY_PARAM);
+				param = jsonObj.getJSONObject(KEY_PARAM);
 			} catch (Exception e) {
 				Tracer.w(TAG, "fail to get param", e);
 			}
 			
 			String onSuccess = null;
 			try {
-				param = jsonObj.getString(KEY_ON_SUCCESS);
+				onSuccess = jsonObj.getString(KEY_ON_SUCCESS);
 			} catch (Exception e) {
 				Tracer.w(TAG, "fail to get onSuccess", e);
 			}
 			
 			String onError = null;
 			try {
-				param = jsonObj.getString(KEY_ON_ERROR);
+				onError = jsonObj.getString(KEY_ON_ERROR);
 			} catch (Exception e) {
 				Tracer.w(TAG, "fail to get onError", e);
 			}
 			
 			String onProgress = null;
 			try {
-				param = jsonObj.getString(KEY_ON_PROGRESS);
+				onProgress = jsonObj.getString(KEY_ON_PROGRESS);
 			} catch (Exception e) {
 				Tracer.w(TAG, "fail to get onProgress", e);
 			}
@@ -237,7 +237,7 @@ public class JSBImpl extends Activity implements IJSB {
 					Constructor<?> ctor = mClass.getConstructor();
 					mObj = ctor.newInstance();
 				}
-				func.invoke(mObj, jsonObj, param, onSuccess, onError, onProgress);
+				func.invoke(mObj, param, onSuccess, onError, onProgress);
 			} catch (Exception e) {
 				Tracer.e(TAG, "fail to call " + mClass.getSimpleName() + ":" + func.getName(), e);
 			}
@@ -284,10 +284,5 @@ public class JSBImpl extends Activity implements IJSB {
 				try { obj.call(new JSONObject("{\"method\":\"onPageFinished\",}")); } catch (Exception e) {}
 			}
 		}
-	}
-
-	@Override
-	public void notify(JSONObject jsonObj, String param, String onSuccess,
-			String onError, String onProgress) {
 	}
 }

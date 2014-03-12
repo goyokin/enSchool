@@ -2,12 +2,7 @@ package com.jsb.simple;
 
 import org.json.JSONObject;
 
-public class JSBChatHistory implements IJSB {
-
-	@Override
-	public void notify(String jsonObj) {
-		
-	}
+public class JSBChatHistory implements IJSBInternal {
 
 	@Override
 	public void onPageFinished() {
@@ -15,7 +10,7 @@ public class JSBChatHistory implements IJSB {
 	}
 
 	@Override
-	public void notify(JSONObject jsonObj, String param, String onSuccess,
+	public void notify(JSONObject param, String onSuccess,
 			String onError, String onProgress) {
 		
 	}
