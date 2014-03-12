@@ -4,13 +4,13 @@ import org.json.JSONObject;
 
 import com.jsb.debug.Tracer;
 
-public class JSBSubscribe extends IJSBInternal {
+public class JSBGetGroupInfo extends IJSBInternal {
 	
-	public JSBSubscribe(JSBImpl jsb) {
+	public JSBGetGroupInfo(JSBImpl jsb) {
 		super(jsb);
 	}
 
-	private final static String TAG = "JSBSubscribe";
+	private final static String TAG = "JSBGetGroupInfo";
 
 	@Override
 	public void onPageFinished() {
@@ -20,8 +20,6 @@ public class JSBSubscribe extends IJSBInternal {
 	@Override
 	public void notify(JSONObject param, String onSuccess,
 			String onError, String onProgress) {
-		Tracer.d(TAG, "JSBSubscribe:notify get called");
-		Tracer.d(TAG, "JSBSubscribe:call back to javascript");
-		callback(onSuccess, null);
+		Tracer.d(TAG, "JSBGetGroupInfo: notify get called");
 	}
 }

@@ -4,6 +4,8 @@ import java.lang.ref.WeakReference;
 
 import org.json.JSONObject;
 
+import com.jsb.debug.Tracer;
+
 public abstract class IJSBInternal {
 	
 	private final static String TAG = "IJSBInternal";
@@ -21,6 +23,8 @@ public abstract class IJSBInternal {
 	}
 	
 	protected void callback(String method, String param) {
+		if (method == null || method.length() <= 0)
+			return;
 		try {
 			JSBImpl inst = mJsb.get();
 			if (inst != null) {

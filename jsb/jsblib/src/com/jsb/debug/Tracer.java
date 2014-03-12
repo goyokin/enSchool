@@ -1,4 +1,4 @@
-package com.jsb.simple;
+package com.jsb.debug;
 
 import java.io.File;
 import java.io.FileOutputStream;

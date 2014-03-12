@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.jsb.debug.Tracer;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.net.http.SslError;
