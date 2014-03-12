@@ -43,6 +43,7 @@ public class JSBLogin extends IJSBInternal {
 		boolean success = false;
 		if (mUsername != null) {
 			if (mAccountMgr != null && mAccountMgr.isUserConnected(mUsername)) {
+				callback(onSuccess, null);
 				return;
 			}
 			

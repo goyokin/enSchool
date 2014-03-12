@@ -20,6 +20,10 @@ public class JSBStartCamera extends IJSBInternal {
 	@Override
 	public void notify(JSONObject param, String onSuccess,
 			String onError, String onProgress) {
-		Tracer.d(TAG, "JSBStartCamera:notify get called");
+		Tracer.d(TAG, "JSBStartCamera: notify get called");
+		
+		// TODO: launch camera
+		String photo = "";
+		callback(onSuccess, photo);
 	}
 }
