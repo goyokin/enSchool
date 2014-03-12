@@ -2,8 +2,12 @@ package com.jsb.simple;
 
 import org.json.JSONObject;
 
-public class JSBLogin implements IJSBInternal {
+public class JSBLogin extends IJSBInternal {
 	
+	public JSBLogin(JSBImpl jsb) {
+		super(jsb);
+	}
+
 	private final static String TAG = "JSBLogin";
 
 	@Override

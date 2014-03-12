@@ -2,7 +2,11 @@ package com.jsb.simple;
 
 import org.json.JSONObject;
 
-public class JSBSendAudio implements IJSBInternal {
+public class JSBSendAudio extends IJSBInternal {
+
+	public JSBSendAudio(JSBImpl jsb) {
+		super(jsb);
+	}
 
 	@Override
 	public void onPageFinished() {

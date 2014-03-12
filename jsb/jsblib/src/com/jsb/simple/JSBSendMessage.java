@@ -2,7 +2,11 @@ package com.jsb.simple;
 
 import org.json.JSONObject;
 
-public class JSBSendMessage implements IJSBInternal {
+public class JSBSendMessage extends IJSBInternal {
+
+	public JSBSendMessage(JSBImpl jsb) {
+		super(jsb);
+	}
 
 	@Override
 	public void onPageFinished() {

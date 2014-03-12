@@ -208,34 +208,34 @@ public class JSBImpl extends Activity implements IJSB {
 			try {
 				param = jsonObj.getJSONObject(KEY_PARAM);
 			} catch (Exception e) {
-				Tracer.w(TAG, "fail to get param", e);
+				// Tracer.w(TAG, "fail to get param", e);
 			}
 			
 			String onSuccess = null;
 			try {
 				onSuccess = jsonObj.getString(KEY_ON_SUCCESS);
 			} catch (Exception e) {
-				Tracer.w(TAG, "fail to get onSuccess", e);
+				// Tracer.w(TAG, "fail to get onSuccess", e);
 			}
 			
 			String onError = null;
 			try {
 				onError = jsonObj.getString(KEY_ON_ERROR);
 			} catch (Exception e) {
-				Tracer.w(TAG, "fail to get onError", e);
+				// Tracer.w(TAG, "fail to get onError", e);
 			}
 			
 			String onProgress = null;
 			try {
 				onProgress = jsonObj.getString(KEY_ON_PROGRESS);
 			} catch (Exception e) {
-				Tracer.w(TAG, "fail to get onProgress", e);
+				// Tracer.w(TAG, "fail to get onProgress", e);
 			}
 
 			try {
 				if (mObj == null) {
-					Constructor<?> ctor = mClass.getConstructor();
-					mObj = ctor.newInstance();
+					Constructor<?> ctor = mClass.getConstructor(JSBImpl.class);
+					mObj = ctor.newInstance(JSBImpl.this);
 				}
 				func.invoke(mObj, param, onSuccess, onError, onProgress);
 			} catch (Exception e) {

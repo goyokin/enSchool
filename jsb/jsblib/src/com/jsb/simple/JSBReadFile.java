@@ -2,7 +2,11 @@ package com.jsb.simple;
 
 import org.json.JSONObject;
 
-public class JSBReadFile implements IJSBInternal {
+public class JSBReadFile extends IJSBInternal {
+
+	public JSBReadFile(JSBImpl jsb) {
+		super(jsb);
+	}
 
 	@Override
 	public void onPageFinished() {

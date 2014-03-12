@@ -2,7 +2,11 @@ package com.jsb.simple;
 
 import org.json.JSONObject;
 
-public class JSBChatHistory implements IJSBInternal {
+public class JSBChatHistory extends IJSBInternal {
+
+	public JSBChatHistory(JSBImpl jsb) {
+		super(jsb);
+	}
 
 	@Override
 	public void onPageFinished() {
