@@ -4,6 +4,8 @@ import java.lang.ref.WeakReference;
 
 import org.json.JSONObject;
 
+import android.content.Context;
+
 import com.jsb.debug.Tracer;
 
 public abstract class IJSBInternal {
@@ -11,7 +13,7 @@ public abstract class IJSBInternal {
 	private final static String TAG = "IJSBInternal";
 	private WeakReference<JSBImpl> mJsb = null;
 
-	public abstract void notify(JSONObject param, String onSuccess, String onError, String onProgress);
+	public abstract void notify(Context context, JSONObject param, String onSuccess, String onError, String onProgress);
 	public abstract void onPageFinished();
 
 	// empty init not allowed

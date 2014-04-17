@@ -2,6 +2,8 @@ package com.jsb.simple;
 
 import org.json.JSONObject;
 
+import android.content.Context;
+
 import com.jsb.chat.GroupManager;
 import com.jsb.debug.Tracer;
 
@@ -20,8 +22,8 @@ public class JSBGetGroupList extends IJSBInternal {
 	}
 
 	@Override
-	public void notify(JSONObject param, String onSuccess,
-			String onError, String onProgress) {
+	public void notify(Context context, JSONObject param, String onSuccess,
+					   String onError, String onProgress) {
 		Tracer.d(TAG, "JSBGetGroupList: notify get called");
 		
 		if (mGroupMgr == null) {

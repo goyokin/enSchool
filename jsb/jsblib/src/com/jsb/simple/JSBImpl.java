@@ -11,6 +11,7 @@ import com.jsb.debug.Tracer;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.view.View;
@@ -197,8 +198,8 @@ public class JSBImpl extends Activity implements IJSB {
 			
 			if (i >= numMethods) {
 				try {
-					// func(JSONObject param, String onSuccess, String onError, String onProgress)
-					func = mClass.getMethod(method, JSONObject.class, String.class,
+					// func(Context context, JSONObject param, String onSuccess, String onError, String onProgress)
+					func = mClass.getMethod(method, Context.class, JSONObject.class, String.class,
 											String.class, String.class);
 				} catch (Exception e) {
 					Tracer.e(TAG, "method not found" + mClass.getName() + ":" + method, e);
@@ -239,7 +240,7 @@ public class JSBImpl extends Activity implements IJSB {
 					Constructor<?> ctor = mClass.getConstructor(JSBImpl.class);
 					mObj = ctor.newInstance(JSBImpl.this);
 				}
-				func.invoke(mObj, param, onSuccess, onError, onProgress);
+				func.invoke(mObj, JSBImpl.this.getApplicationContext(), param, onSuccess, onError, onProgress);
 			} catch (Exception e) {
 				Tracer.e(TAG, "fail to call " + mClass.getSimpleName() + ":" + func.getName(), e);
 			}

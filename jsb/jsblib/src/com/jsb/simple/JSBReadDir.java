@@ -4,6 +4,8 @@ import java.io.File;
 
 import org.json.JSONObject;
 
+import android.content.Context;
+
 import com.jsb.chat.AccountManager;
 import com.jsb.debug.Tracer;
 
@@ -23,8 +25,8 @@ public class JSBReadDir extends IJSBInternal {
 	}
 
 	@Override
-	public void notify(JSONObject param, String onSuccess,
-			String onError, String onProgress) {
+	public void notify(Context context, JSONObject param, String onSuccess,
+					   String onError, String onProgress) {
 		Tracer.d(TAG, "JSBReadDir:notify get called");
 
 		String dir = null;

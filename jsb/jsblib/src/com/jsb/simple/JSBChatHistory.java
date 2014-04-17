@@ -2,6 +2,8 @@ package com.jsb.simple;
 
 import org.json.JSONObject;
 
+import android.content.Context;
+
 import com.jsb.chat.ChatManager;
 import com.jsb.debug.Tracer;
 
@@ -23,8 +25,8 @@ public class JSBChatHistory extends IJSBInternal {
 	}
 
 	@Override
-	public void notify(JSONObject param, String onSuccess,
-			String onError, String onProgress) {
+	public void notify(Context context, JSONObject param, String onSuccess,
+					   String onError, String onProgress) {
 		String friend = null;
 		try {
 			friend = param.getString(PARAM_FRIEND);
@@ -51,7 +53,7 @@ public class JSBChatHistory extends IJSBInternal {
 		
 		String ch = null;
 		if (mChatMgr == null)
-			mChatMgr = ChatManager.getInstance();
+			mChatMgr = ChatManager.getInstance(context);
 		if (mChatMgr != null) {
 			if (friend != null) {
 				ch = mChatMgr.getFriendChatHistory(friend, pageIndex);

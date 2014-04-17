@@ -2,6 +2,8 @@ package com.jsb.simple;
 
 import org.json.JSONObject;
 
+import android.content.Context;
+
 public class JSBReadFile extends IJSBInternal {
 
 	public JSBReadFile(JSBImpl jsb) {
@@ -14,8 +16,8 @@ public class JSBReadFile extends IJSBInternal {
 	}
 
 	@Override
-	public void notify(JSONObject param, String onSuccess,
-			String onError, String onProgress) {
+	public void notify(Context context, JSONObject param, String onSuccess,
+					   String onError, String onProgress) {
 		
 	}
 }

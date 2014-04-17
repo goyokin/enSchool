@@ -2,6 +2,8 @@ package com.jsb.simple;
 
 import org.json.JSONObject;
 
+import android.content.Context;
+
 import com.jsb.chat.GroupManager;
 import com.jsb.debug.Tracer;
 
@@ -22,8 +24,8 @@ public class JSBAddFriend extends IJSBInternal {
 	}
 
 	@Override
-	public void notify(JSONObject param, String onSuccess,
-			String onError, String onProgress) {
+	public void notify(Context context, JSONObject param, String onSuccess,
+					   String onError, String onProgress) {
 		Tracer.d(TAG, "JSBAddFriend: notify get called");
 		
 		String friend = null;

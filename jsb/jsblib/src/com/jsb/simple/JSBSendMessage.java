@@ -2,6 +2,8 @@ package com.jsb.simple;
 
 import org.json.JSONObject;
 
+import android.content.Context;
+
 import com.jsb.chat.ChatManager;
 import com.jsb.debug.Tracer;
 
@@ -22,8 +24,8 @@ public class JSBSendMessage extends IJSBInternal {
 	}
 
 	@Override
-	public void notify(JSONObject param, String onSuccess,
-						String onError, String onProgress) {
+	public void notify(Context context, JSONObject param, String onSuccess,
+					   String onError, String onProgress) {
 		String target = null;
 		try {
 			target = param.getString(PARAM_TARGET);
@@ -42,7 +44,7 @@ public class JSBSendMessage extends IJSBInternal {
 		
 		boolean success = false;
 		if (mChatMgr == null)
-			mChatMgr = ChatManager.getInstance();
+			mChatMgr = ChatManager.getInstance(context);
 		if (mChatMgr != null) {
 			success = mChatMgr.sendMessage(target, msg);
 		}

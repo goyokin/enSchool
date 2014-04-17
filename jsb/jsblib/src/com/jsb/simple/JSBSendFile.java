@@ -2,6 +2,8 @@ package com.jsb.simple;
 
 import org.json.JSONObject;
 
+import android.content.Context;
+
 import com.jsb.chat.ChatManager;
 import com.jsb.debug.Tracer;
 
@@ -24,8 +26,8 @@ public class JSBSendFile extends IJSBInternal {
 	}
 
 	@Override
-	public void notify(JSONObject param, String onSuccess,
-			String onError, String onProgress) {
+	public void notify(Context context, JSONObject param, String onSuccess,
+					   String onError, String onProgress) {
 		Tracer.d(TAG, "JSBSendFile:notify get called");
 		
 		String file = null;
@@ -50,7 +52,7 @@ public class JSBSendFile extends IJSBInternal {
 		}
 		
 		if (mChatMgr == null) {
-			mChatMgr = ChatManager.getInstance();
+			mChatMgr = ChatManager.getInstance(context);
 		}
 		
 		boolean success = false;
