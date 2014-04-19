@@ -27,7 +27,7 @@ public class JSBGetGroupList extends IJSBInternal {
 		Tracer.d(TAG, "JSBGetGroupList: notify get called");
 		
 		if (mGroupMgr == null) {
-			mGroupMgr = GroupManager.getInstance();
+			mGroupMgr = GroupManager.getInstance(context);
 		}
 		
 		String groupInfo = null;

@@ -47,7 +47,7 @@ public class JSBRemoveFriend extends IJSBInternal {
 		}
 		
 		if (mGroupMgr == null) {
-			mGroupMgr = GroupManager.getInstance();
+			mGroupMgr = GroupManager.getInstance(context);
 		}
 		
 		boolean success = false;

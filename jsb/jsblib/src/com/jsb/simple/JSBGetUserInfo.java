@@ -37,7 +37,7 @@ public class JSBGetUserInfo extends IJSBInternal {
 		}
 		
 		if (mGroupMgr == null) {
-			mGroupMgr = GroupManager.getInstance();
+			mGroupMgr = GroupManager.getInstance(context);
 		}
 		
 		String userInfo = null;

@@ -16,6 +16,7 @@ public class JSBAddFriend extends IJSBInternal {
 	private final static String TAG = "JSBAddFriend";
 	private final static String PARAM_FRIEND = "friend";
 	private final static String PARAM_GROUP = "group";
+	private final static String PARAM_NICK_NAME = "nickname";
 	private GroupManager mGroupMgr = null;
 
 	@Override
@@ -46,13 +47,22 @@ public class JSBAddFriend extends IJSBInternal {
 			return;
 		}
 		
+		String nickName = null;
+		try {
+			nickName = param.getString(PARAM_NICK_NAME);
+		} catch (Exception e) {
+			Tracer.e(TAG, "group is not set");
+			callback(onError, null);
+			return;
+		}
+		
 		if (mGroupMgr == null) {
-			mGroupMgr = GroupManager.getInstance();
+			mGroupMgr = GroupManager.getInstance(context);
 		}
 		
 		boolean success = false;
 		if (mGroupMgr != null) {
-			success = mGroupMgr.addUser(group, friend);
+			success = mGroupMgr.addUser(group, friend, nickName);
 		}
 		
 		if (success) {

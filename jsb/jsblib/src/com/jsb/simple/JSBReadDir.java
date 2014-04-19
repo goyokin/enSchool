@@ -6,7 +6,6 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.jsb.chat.AccountManager;
 import com.jsb.debug.Tracer;
 
 public class JSBReadDir extends IJSBInternal {
