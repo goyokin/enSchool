@@ -9,19 +9,36 @@
 
         <script type="text/javascript">
 
-        function test(){
-            window.JSBImpl.notify('{"class":"com.jsb.simple.JSBSubscribe","method":"notify","onSuccess":"callback","param":{"username":"testor@127.0.0.1/myres","password":"pass"}}');
+        function login(){
+            window.JSBImpl.notify('{"class":"com.jsb.simple.JSBLogin","method":"notify","onSuccess":"callback","param":{"username":"dk@54.193.121.29/testres","password":"1"}}');
         }
         
         function callback(){
-            window.JSBImpl.notify('{"class":"com.jsb.simple.JSBLogin","method":"notify"}');
+            alert("operation success");
+        }
+        
+        function send(){
+        	window.JSBImpl.notify('{"class":"com.jsb.simple.JSBSendMessage","method":"notify","onSuccess":"callback","param":{"msg":"hello world","target":"dk1"}}');
+        }
+        
+        function addGroup(){
+        	window.JSBImpl.notify('{"class":"com.jsb.simple.JSBCreateGroup","method":"notify","onSuccess":"callback","param":{"group":"mythirdgroup"}}');
+        }
+        
+        function recv(){
         }
 
     	</script>
     </head>
 
     <body>
-    	<input type="button" onclick="test()"  style="white-space: normal;text-align:left;"
-       		value="[JavaScriptBridge] Call Java function" />     <br/>
+    	<input type="button" onclick="login()"  style="white-space: normal;text-align:left;"
+       		value="Login" />     <br/>
+       	<input type="button" onclick="send()"  style="white-space: normal;text-align:left;"
+       		value="send" />     <br/>
+       	<input type="button" onclick="recv()"  style="white-space: normal;text-align:left;"
+       		value="recv" />     <br/>
+       	<input type="button" onclick="addGroup()"  style="white-space: normal;text-align:left;"
+       		value="Create Group" />     <br/>
     </body>
 </html>
