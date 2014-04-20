@@ -4,16 +4,18 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
+import com.jsb.chat.AccountManager;
 import com.jsb.chat.GroupManager;
 import com.jsb.debug.Tracer;
 
-public class JSBGetGroupInfo extends IJSBInternal {
+public class JSBJoinGroup extends JSBChangeGroup {
 	
-	public JSBGetGroupInfo(JSBImpl jsb) {
+	public JSBJoinGroup(JSBImpl jsb) {
 		super(jsb);
 	}
-
-	private final static String TAG = "JSBGetGroupInfo";
+	
+	private final static String TAG = "JSBJoinGroup";
+	private final static String PARAM_NICK_NAME = "nickName";
 	private final static String PARAM_GROUP = "group";
 	private GroupManager mGroupMgr = null;
 
@@ -25,7 +27,7 @@ public class JSBGetGroupInfo extends IJSBInternal {
 	@Override
 	public void notify(Context context, JSONObject param, String onSuccess,
 					   String onError, String onProgress) {
-		Tracer.d(TAG, "JSBGetGroupInfo: notify get called");
+		Tracer.d(TAG, "JSBAddFriend: notify get called");
 		
 		String group = null;
 		try {
@@ -36,17 +38,26 @@ public class JSBGetGroupInfo extends IJSBInternal {
 			return;
 		}
 		
+		String nickName = null;
+		try {
+			nickName = param.getString(PARAM_NICK_NAME);
+		} catch (Exception e) {
+			// use user name instead if nick name is not set
+			AccountManager am = AccountManager.getInstance(context);
+			nickName = am.getUser();
+		}
+		
 		if (mGroupMgr == null) {
 			mGroupMgr = GroupManager.getInstance(context);
 		}
 		
-		String groupInfo = null;
+		boolean success = false;
 		if (mGroupMgr != null) {
-			groupInfo = mGroupMgr.getGroup(group).mGroupName;
+			success = mGroupMgr.joinGroup(nickName, group);
 		}
 		
-		if (groupInfo != null) {
-			callback(onSuccess, groupInfo);
+		if (success) {
+			callback(onSuccess, null);
 		} else {
 			callback(onError, null);
 		}

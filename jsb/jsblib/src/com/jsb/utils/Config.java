@@ -15,6 +15,8 @@ public class Config {
 	public final static String DEF_HOST = "127.0.0.1";
 	public final static String KEY_RES_NAME = "key_res_name";
 	public final static String DEF_RES = "smack-jsb";
+	public final static String KEY_HIS_PG_SIZE = "key_pg_sz";
+	public final static int DEF_HIS_PG_SIZE = 20;
 	
 	private Config(Context context) {
 		mContext = context;

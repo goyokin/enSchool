@@ -72,7 +72,9 @@ public class MessageManager implements Iterable<ChatMessage> {
 				db = mStorage.getWritableDatabase();
 				ContentValues values = new ContentValues();
 				values.put(MessageStorage.COLUMN_NAME_TEXT, msg.getBody());
+				db.beginTransaction();
 				db.insert(MessageStorage.TABLE_NAME, null, values);
+				db.endTransaction();
 			} catch (Exception e) {
 				Tracer.e(TAG, "add msg fail", e);
 			} finally {

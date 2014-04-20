@@ -1,5 +1,7 @@
 package com.jsb.chat;
 
+import java.util.ArrayList;
+
 import org.jivesoftware.smack.Connection;
 import org.jivesoftware.smack.packet.Message;
 import android.content.Context;
@@ -37,15 +39,22 @@ public class ChatManager {
 			return false;
 		}
 		
+		GroupManager gm = GroupManager.getInstance(mContext);
+		GroupManager.GroupRecord r = gm.getGroup(target);
+		
 		try {
-			Message message = new Message();
 			msg = msg.replaceAll("[\\u0001-\\u0008\\u000B-\\u001F]", "");
-			message.setBody(msg);
-			message.setType(Message.Type.chat);
-			// assuming talking within the same host
-			message.setTo(target + "@" + am.getHost() + "/" + am.getResource());
-			message.setFrom(am.getFullUserName());
-			conn.sendPacket(message);
+			if (r == null) { // send to a firend 
+				Message message = new Message();
+				message.setBody(msg);
+				message.setType(Message.Type.chat);
+				// assuming talking within the same host
+				message.setTo(target + "@" + am.getHost() + "/" + am.getResource());
+				message.setFrom(am.getFullUserName());
+				conn.sendPacket(message);
+			} else {
+				r.mMuc.sendMessage(msg);
+			}
 			Tracer.d(TAG, "sent msg " + msg + " to " + target);
 		} catch (Exception e) {
 			Tracer.e(TAG, "fail to send message", e);
@@ -54,13 +63,29 @@ public class ChatManager {
 		return true;
 	}
 	
-	public String getFriendChatHistory(String friend, int pageIndex) {
+	public String getFriendChatHistory(String friend, int pageIndex, int pageSize) {
 		Tracer.d(TAG, "get chat history for " + friend + " on page " + pageIndex);
 		return "";
 	}
 	
-	public String getGroupChatHistory(String group, int pageIndex) {
+	public String getGroupChatHistory(String group, int pageIndex, int pageSize) {
 		Tracer.d(TAG, "get chat history for " + group + " on page " + pageIndex);
+		
+		GroupManager gm = GroupManager.getInstance(mContext);
+		ArrayList<Message> history = gm.getChatHistory(group);
+		
+		if (history != null) {
+			String messages = "";
+			
+			for (int i = 0; i < history.size(); i++) {
+				messages += history.get(i).getBody() + ":";
+			}
+			
+			Tracer.d(TAG, "messages = " + messages);
+			
+			return messages;
+		}
+		Tracer.d(TAG, "messages = ");
 		return "";
 	}
 	

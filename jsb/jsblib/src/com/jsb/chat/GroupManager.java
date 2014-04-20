@@ -6,26 +6,38 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jivesoftware.smack.Connection;
+import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterGroup;
 import org.jivesoftware.smack.SmackConfiguration;
 import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.smackx.Form;
 import org.jivesoftware.smackx.FormField;
 import org.jivesoftware.smackx.muc.DiscussionHistory;
+import org.jivesoftware.smackx.muc.InvitationRejectionListener;
 import org.jivesoftware.smackx.muc.MultiUserChat;
-import org.json.JSONObject;
-
 import android.content.Context;
-
 import com.jsb.debug.Tracer;
 
-public class GroupManager {
+public class GroupManager implements InvitationRejectionListener, PacketListener {
 	private final static String TAG = "GroupManager";
 	private static GroupManager mInstance = null;
 	private Context mContext = null;
+	
+	public class GroupRecord {
+		public MultiUserChat mMuc = null;
+		public String mGroupName = null;
+		
+		public GroupRecord(String groupName, MultiUserChat muc) {
+			mMuc = muc;
+			mGroupName = groupName;
+		}
+	}
+	
+	ArrayList<GroupRecord> mMyGroups = new ArrayList<GroupRecord>(); 
 	
 	private GroupManager(Context context) {
 		mContext = context;
@@ -40,6 +52,15 @@ public class GroupManager {
 	}
 	
 	public boolean addGroup(String groupName) {
+		
+		Iterator<GroupRecord> i = mMyGroups.iterator();
+		while (i.hasNext()) {
+			GroupRecord r = i.next();
+			if (r.mGroupName.compareTo(groupName) == 0) {
+				return true;
+			}
+		}
+
 		AccountManager am = AccountManager.getInstance(mContext);
         if (am == null) {
         	Tracer.e(TAG, "connection not created");
@@ -55,12 +76,15 @@ public class GroupManager {
         	conn.getRoster().createGroup(groupName);  
             Tracer.v(TAG, "create " + groupName + " success");
             
-            /* MultiUserChat muc = createRoom(groupName, "");
+            // create default room for new group
+            MultiUserChat muc = createRoom(groupName, "");
             Tracer.v(TAG, "muc = " + muc);
-            muc.sendMessage("Welcome to room"); */
+            muc.sendMessage("Welcome to " + groupName);
+            muc.addInvitationRejectionListener(this);
+            muc.addMessageListener(this);
+            muc.addParticipantListener(this);
+            mMyGroups.add(new GroupRecord(groupName, muc));
             
-            MultiUserChat muc = joinMultiUserChat("AAA", "mythirdgroup", "");
-            Tracer.v(TAG, "muc = " + muc);
             return true;
         } catch (Exception e) {
             Tracer.e(TAG, "fail to create group", e);
@@ -114,9 +138,18 @@ public class GroupManager {
 		return "";
 	}
 	
-	public String getGroup(String group) {
+	public GroupRecord getGroup(String group) {
 		Tracer.d(TAG, "get group info for " + group);
-		return "";
+		
+		Iterator<GroupRecord> i = mMyGroups.iterator();
+		while (i.hasNext()) {
+			GroupRecord r = i.next();
+			if (r.mGroupName.compareTo(group) == 0) {
+				return r;
+			}
+		}
+		
+		return null;
 	}
 	
 	public String getGroupList() {
@@ -131,6 +164,27 @@ public class GroupManager {
 		}
 		
 		return nameList;
+	}
+	
+	public boolean joinGroup(String nickName, String groupName) {
+		
+		Iterator<GroupRecord> i = mMyGroups.iterator();
+		while (i.hasNext()) {
+			GroupRecord r = i.next();
+			if (r.mGroupName.compareTo(groupName) == 0) {
+				return true;
+			}
+		}
+		
+		MultiUserChat muc = joinMultiUserChat(nickName, groupName, "");
+        Tracer.v(TAG, "muc = " + muc);
+        if (muc == null) {
+        	Tracer.d(TAG, "user is not authorized to join");
+        	return false;
+        }
+        mMyGroups.add(new GroupRecord(groupName, muc));
+        
+        return true;
 	}
 	
 	public MultiUserChat joinMultiUserChat(String user, String roomsName,  
@@ -150,7 +204,7 @@ public class GroupManager {
             MultiUserChat muc = new MultiUserChat(conn, roomsName + "@conference." + conn.getServiceName());  
             DiscussionHistory history = new DiscussionHistory();  
             history.setMaxChars(0);
-            // history.setSince(new Date());  
+            // history.setSince(new Date());
             muc.join(user, password, history,  
                     SmackConfiguration.getPacketReplyTimeout());  
             Tracer.i(TAG, "join success");  
@@ -299,5 +353,63 @@ public class GroupManager {
             Entrieslist.add(i.next());  
         }  
         return Entrieslist;  
-    } 
+    }
+    
+    public ArrayList<Message> getChatHistory(String group) {
+    	Iterator<GroupRecord> i = mMyGroups.iterator();
+		while (i.hasNext()) {
+			GroupRecord r = i.next();
+			if (r.mGroupName.compareTo(group) == 0) {
+				Tracer.d(TAG, "found group " + group);
+				Message m = null;
+				
+				ArrayList<Message> history = new ArrayList<Message>();
+				do {
+					m = r.mMuc.pollMessage();
+					if (m != null) {
+						history.add(m);
+					}
+				} while (m != null);
+				
+				return history;
+			}
+		}
+		
+		return null;
+    }
+
+	@Override
+	public void invitationDeclined(String invitee, String reason) {
+		Tracer.d(TAG, "Request has been rejected by " + invitee);
+	}
+
+	@Override
+	public void processPacket(Packet packet) {
+		// TODO: not sure how this different from PacketListener for current connection
+		Tracer.d(TAG, "processPacket get called in GroupManager");
+	}
+	
+	public boolean inviateFriend(String group, String friend, String reason) {
+		GroupRecord r = null;
+		Iterator<GroupRecord> i = mMyGroups.iterator();
+		while (i.hasNext()) {
+			r = i.next();
+			if (r.mGroupName.compareTo(group) == 0) {
+				break;
+			}
+			r = null;
+		}
+		
+		if (r != null) {
+			try {
+				r.mMuc.invite(friend, reason);
+			} catch (Exception e) {
+				Tracer.e(TAG, "fail to send invitation to " + friend);
+				return false;
+			}
+			return true;
+		}
+		
+		return false;
+	}
 }
